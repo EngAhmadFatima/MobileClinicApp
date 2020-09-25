@@ -1,0 +1,238 @@
+﻿
+@{
+    ViewBag.Title = "DoctorRegisteration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    MoCl.Models.MOCL_DBEntities db = new MoCl.Models.MOCL_DBEntities();
+}
+<h2>تسجيل طبيب جديد</h2>
+<hr />
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+<form role="form" class="form-horizontal">
+    <!--txt_FirstName-->
+    <div class="form-group">
+        <label class="control-label col-md-3">
+            الاسم الأول
+        </label>
+        <div class="col-md-9">
+            <input type="text" class="form-control" id="txt_FirstName" placeholder="الاسم الأول" />
+        </div>
+    </div>
+    <!--txt_LastName-->
+    <div class="form-group">
+        <label class="control-label col-md-3">
+            الكنية
+        </label>
+        <div class="col-md-9">
+            <input type="text" class="form-control" id="txt_LastName" placeholder="الكنية" />
+        </div>
+    </div>
+    <!--txt_FatherName-->
+    <div class="form-group">
+        <label class="control-label col-md-3">
+            اسم الأب
+        </label>
+        <div class="col-md-9">
+            <input type="text" class="form-control" id="txt_FatherName" placeholder="اسم الأب" />
+        </div>
+    </div>
+    <!--sel_Specializ"-->
+    <div class="form-group">
+        <label class="control-label col-md-3">
+            الاختصاص
+        </label>
+        <div class="col-md-9">
+            <select id="sel_Specializ" class="form-control">
+                <option value="0">اختر اختصاص</option>
+                @foreach (var item in db.SPECIALIZATIONS)
+                {
+                    <option value="@item.Id">@item.Specialization1</option>
+                }
+            </select>
+        </div>
+    </div>
+    <!--sel_Special1"-->
+    <div class="form-group">
+        <label class="control-label col-md-3">
+            تخصص أول
+        </label>
+        <div class="col-md-9">
+            <select id="sel_Special1" class="form-control">
+                <option value="0">اختر تخصص</option>
+                @foreach (var item in db.SPECIALTies)
+                {
+                    <option value="@item.Id">@item.Specialty1</option>
+                }
+            </select>
+        </div>
+    </div>
+    <!--sel_Special2"-->
+    <div class="form-group">
+        <label class="control-label col-md-3">
+            تخصص ثاني
+        </label>
+        <div class="col-md-9">
+            <select id="sel_Special2" class="form-control">
+                <option value="0">لا يوجد</option>
+                @foreach (var item in db.SPECIALTies)
+                {
+                    <option value="@item.Id">@item.Specialty1</option>
+                }
+            </select>
+        </div>
+    </div>
+    <!--sel_Special3"-->
+    <div class="form-group">
+        <label class="control-label col-md-3">
+            تخصص ثالث
+        </label>
+        <div class="col-md-9">
+            <select id="sel_Special3" class="form-control">
+                <option value="0">لا يوجد</option>
+                @foreach (var item in db.SPECIALTies)
+                {
+                    <option value="@item.Id">@item.Specialty1</option>
+                }
+            </select>
+        </div>
+    </div>
+    <!--sel_Country"-->
+    <div class="form-group">
+        <label class="control-label col-md-3">
+            البلد
+        </label>
+        <div class="col-md-9">
+            <select id="sel_Country" class="form-control">
+                <option value="0">اختر بلد</option>
+                @foreach (var item in db.COUNTRIES)
+                {
+                    <option value="@item.Id">@item.Country1</option>
+                }
+            </select>
+        </div>
+    </div>
+    <!--sel_City"-->
+    <div class="form-group">
+        <label class="control-label col-md-3">
+            المدينة
+        </label>
+        <div class="col-md-9">
+            <select id="sel_City" class="form-control">
+                <option value="0">اختر مدينة</option>
+                @foreach (var item in db.CITIES)
+                {
+                    <option value="@item.Id">@item.City_ar</option>
+                }
+            </select>
+        </div>
+    </div>
+    <!--txt_Address"-->
+    <div class="form-group">
+        <label class="control-label col-md-3">
+            العنوان
+        </label>
+        <div class="col-md-9">
+            <textarea class="form-control" id="txt_Address" placeholder="العنوان"></textarea>
+        </div>
+    </div>
+    <!--txt_Phone"-->
+    <div class="form-group">
+        <label class="control-label col-md-3">
+            رقم الهاتف
+        </label>
+        <div class="col-md-9">
+            <input type="text" class="form-control" id="txt_Phone" placeholder="رقم الهاتف" />
+        </div>
+    </div>
+    <!--txt_Mobile"-->
+    <div class="form-group">
+        <label class="control-label col-md-3">
+            رقم الجوال
+        </label>
+        <div class="col-md-9">
+            <input type="text" class="form-control" id="txt_Mobile" placeholder="رقم الجوال" />
+        </div>
+    </div>
+    <!--txt_Password"-->
+    <div class="form-group">
+        <label class="control-label col-md-3">
+            كلمة المرور
+        </label>
+        <div class="col-md-9">
+            <input type="password" class="form-control" id="txt_Password" placeholder="كلمة المرور" />
+        </div>
+    </div>
+    <!--txt_RePassword"-->
+    <div class="form-group">
+        <label class="control-label col-md-3">
+            كرر كلمة المرور
+        </label>
+        <div class="col-md-9">
+            <input type="password" class="form-control" id="txt_RePassword" placeholder="كرر كلمة المرور" />
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-offset-3 col-md-9">
+            <div class="alert alert-danger" role="alert" id="errorReg" hidden="hidden"></div>
+            <button id="btn_Register" type="button" class="btn btn-primary btn-sm" >
+                حفظ ومتابعة
+            </button>
+        </div>
+    </div>
+
+</form>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+
+
+            $('#btn_Register').click(function () {
+
+                var firstName = $('#txt_FirstName').val();
+                var lastName = $('#txt_LastName').val();
+                var fatheName = $('#txt_FatherName').val();
+                var specializ = $('#sel_Specializ').val();
+                var speclty1 = $('#sel_Special1').val();
+                var speclty2 = $('#sel_Special2').val();
+                var speclty3 = $('#sel_Special3').val();
+                var country = $('#sel_Country').val();
+                var city = $('#sel_City').val();
+                var address = $('#txt_Address').val();
+                var phone = $('#txt_Phone').val();
+                var mobile = $('#txt_Mobile').val();
+                var password = $('#txt_Password').val();
+                var rePassword = $('#txt_RePassword').val();
+
+
+                if (firstName == "" || lastName == "" || fatheName == "" || address == "" || mobile == "" || password == "" || specializ == 0 || speclty1 == 0 || country == 0 || city==0)
+                {
+                    alert("يجب ملئ كافة البيانات !!");
+                }else
+                {
+                    if (password == rePassword)
+                    {
+                        $.ajax({
+                            type: "POST",
+                            url: "@Url.Action("DoctorAjaxRegistration", "Account")",
+                            data: { FirstName: firstName, LastName: lastName, FatherName: fatheName, Specialization: specializ, Specialty1: speclty1, Specialty2: speclty2, Specialty3: speclty3, Country: country, City:city, Address:address, Phone:phone, Mobile:mobile, Password:password },
+                        success: function (data) {
+                            
+                            if (data.trim() != 0) { alert("اسم المستخدم هو: (" + data + ") يجب الاحتفاظ باسم المستخدم من أجل عملية تسجيل الدخول"); location.href.replace("/Account/DoctorLogin"); }
+                            else { alert("فشل تسجيل الدخول !!"); }
+                        
+                        }
+                    });
+
+                } else
+            {
+                    alert("كلمتا المرور غير متطابقتين !!");
+            }
+                }
+            });
+        });
+    </script>
+    }
+

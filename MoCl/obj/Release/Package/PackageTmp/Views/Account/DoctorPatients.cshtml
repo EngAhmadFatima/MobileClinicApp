@@ -1,0 +1,47 @@
+﻿@model IEnumerable<MoCl.Models.PATIENT>
+
+@{
+    ViewBag.Title = "DoctorPatients";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    MoCl.Models.MOCL_DBEntities db = new MoCl.Models.MOCL_DBEntities();
+}
+
+<h2>مرضى عيادتي</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            المعرف
+        </th>
+        <th>
+            الاسم
+        </th>
+        <th>
+            رقم الجوال
+        </th>
+        <th>
+            عدد الزيارات
+        </th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.FatherName) @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MobaileNumber)
+        </td>
+        <td>
+            @{ int DocId = (int)Session["DoctorId"]; int PatId = item.Id; }
+            @Html.Raw(db.PATIENTS_APPOINTMENTS.Where(a => a.PatientId == PatId && a.DOCTORS_APPOINTMENT_DETAILS.DoctorId == DocId).Count())
+        </td>
+
+    </tr>
+}
+
+</table>

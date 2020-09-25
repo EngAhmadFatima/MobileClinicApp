@@ -1,0 +1,308 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MobileClinic_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CITIES">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CountryId" Type="int" />
+    <Property Name="City_ar" Type="nchar" MaxLength="20" />
+    <Property Name="City_en" Type="nchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="COUNTRIES">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Country" Type="nchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="DOCTORS">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nchar" MaxLength="20" />
+    <Property Name="LastName" Type="nchar" MaxLength="20" />
+    <Property Name="FatherName" Type="nchar" MaxLength="20" />
+    <Property Name="FullName" Type="nchar" MaxLength="60" />
+    <Property Name="specialization" Type="int" />
+    <Property Name="Specialty1" Type="int" />
+    <Property Name="Specialty2" Type="int" />
+    <Property Name="Specialty3" Type="int" />
+    <Property Name="Country" Type="nchar" MaxLength="20" />
+    <Property Name="City" Type="nchar" MaxLength="120" />
+    <Property Name="Address" Type="nchar" MaxLength="50" />
+    <Property Name="Phone" Type="nchar" MaxLength="12" />
+    <Property Name="Mobile" Type="nchar" MaxLength="16" />
+    <Property Name="UserName" Type="nchar" MaxLength="20" />
+    <Property Name="Password" Type="nchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="DOCTORS_APPOINTMENT_DETAILS">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DoctorId" Type="int" />
+    <Property Name="DoctorAvilableId" Type="int" />
+    <Property Name="Starting" Type="time" Precision="7" />
+    <Property Name="Ending" Type="time" Precision="7" />
+  </EntityType>
+  <EntityType Name="DOCTORS_AVAILABLE">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DoctorId" Type="int" />
+    <Property Name="Day" Type="nchar" MaxLength="10" />
+    <Property Name="StartingTime" Type="time" Precision="7" />
+    <Property Name="EndingTime" Type="time" Precision="7" />
+    <Property Name="AppointmentDuration" Type="time" Precision="7" />
+  </EntityType>
+  <EntityType Name="PATIENTS">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nchar" MaxLength="20" />
+    <Property Name="LastName" Type="nchar" MaxLength="20" />
+    <Property Name="Gender" Type="int" />
+    <Property Name="MobaileNumber" Type="nchar" MaxLength="15" />
+    <Property Name="Country" Type="nchar" MaxLength="15" />
+    <Property Name="City" Type="nchar" MaxLength="15" />
+    <Property Name="BirthDate" Type="date" />
+    <Property Name="Password" Type="nchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="PATIENTS_APPOINTMENTS">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PatientId" Type="int" />
+    <Property Name="AppointmentId" Type="int" />
+    <Property Name="AppointmentDate" Type="datetime" />
+    <Property Name="Status" Type="bit" />
+  </EntityType>
+  <EntityType Name="SPECIALIZATIONS">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Specialization" Type="nchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="SPECIALTY">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SpecializationId" Type="int" />
+    <Property Name="Specialty" Type="nchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="WEEK_DAYS">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Day_full" Type="nchar" MaxLength="10" />
+    <Property Name="Day_short" Type="nchar" MaxLength="5" />
+    <Property Name="Day_ar" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <Association Name="FK_CITIES_COUNTRIES">
+    <End Role="COUNTRIES" Type="Self.COUNTRIES" Multiplicity="0..1" />
+    <End Role="CITIES" Type="Self.CITIES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COUNTRIES">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CITIES">
+        <PropertyRef Name="CountryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DOCTORS_APPOINTMENT_DETAILS_Doctors">
+    <End Role="DOCTORS" Type="Self.DOCTORS" Multiplicity="0..1" />
+    <End Role="DOCTORS_APPOINTMENT_DETAILS" Type="Self.DOCTORS_APPOINTMENT_DETAILS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DOCTORS">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DOCTORS_APPOINTMENT_DETAILS">
+        <PropertyRef Name="DoctorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DOCTORS_APPOINTMENT_DETAILS_DOCTORS_AVAILABLE">
+    <End Role="DOCTORS_AVAILABLE" Type="Self.DOCTORS_AVAILABLE" Multiplicity="0..1" />
+    <End Role="DOCTORS_APPOINTMENT_DETAILS" Type="Self.DOCTORS_APPOINTMENT_DETAILS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DOCTORS_AVAILABLE">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DOCTORS_APPOINTMENT_DETAILS">
+        <PropertyRef Name="DoctorAvilableId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DOCTORS_AVAILABLE_Doctors">
+    <End Role="DOCTORS" Type="Self.DOCTORS" Multiplicity="0..1" />
+    <End Role="DOCTORS_AVAILABLE" Type="Self.DOCTORS_AVAILABLE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DOCTORS">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DOCTORS_AVAILABLE">
+        <PropertyRef Name="DoctorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DOCTORS_SPECIALIZATIONS">
+    <End Role="SPECIALIZATIONS" Type="Self.SPECIALIZATIONS" Multiplicity="0..1" />
+    <End Role="DOCTORS" Type="Self.DOCTORS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SPECIALIZATIONS">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DOCTORS">
+        <PropertyRef Name="specialization" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DOCTORS_SPECIALTY1">
+    <End Role="SPECIALTY" Type="Self.SPECIALTY" Multiplicity="0..1" />
+    <End Role="DOCTORS" Type="Self.DOCTORS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SPECIALTY">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DOCTORS">
+        <PropertyRef Name="Specialty1" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DOCTORS_SPECIALTY2">
+    <End Role="SPECIALTY" Type="Self.SPECIALTY" Multiplicity="0..1" />
+    <End Role="DOCTORS" Type="Self.DOCTORS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SPECIALTY">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DOCTORS">
+        <PropertyRef Name="Specialty2" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DOCTORS_SPECIALTY3">
+    <End Role="SPECIALTY" Type="Self.SPECIALTY" Multiplicity="0..1" />
+    <End Role="DOCTORS" Type="Self.DOCTORS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SPECIALTY">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DOCTORS">
+        <PropertyRef Name="Specialty3" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PATIENTS_APPOINTMENTS_DOCTORS_APPOINTMENT_DETAILS">
+    <End Role="DOCTORS_APPOINTMENT_DETAILS" Type="Self.DOCTORS_APPOINTMENT_DETAILS" Multiplicity="0..1" />
+    <End Role="PATIENTS_APPOINTMENTS" Type="Self.PATIENTS_APPOINTMENTS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DOCTORS_APPOINTMENT_DETAILS">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PATIENTS_APPOINTMENTS">
+        <PropertyRef Name="AppointmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PATIENTS_APPOINTMENTS_PATIENTS1">
+    <End Role="PATIENTS" Type="Self.PATIENTS" Multiplicity="0..1" />
+    <End Role="PATIENTS_APPOINTMENTS" Type="Self.PATIENTS_APPOINTMENTS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PATIENTS">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PATIENTS_APPOINTMENTS">
+        <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SPECIALTY_SPECIALIZATIONS">
+    <End Role="SPECIALIZATIONS" Type="Self.SPECIALIZATIONS" Multiplicity="0..1" />
+    <End Role="SPECIALTY" Type="Self.SPECIALTY" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SPECIALIZATIONS">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SPECIALTY">
+        <PropertyRef Name="SpecializationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MobileClinic_DBModelStoreContainer">
+    <EntitySet Name="CITIES" EntityType="Self.CITIES" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="COUNTRIES" EntityType="Self.COUNTRIES" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DOCTORS" EntityType="Self.DOCTORS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DOCTORS_APPOINTMENT_DETAILS" EntityType="Self.DOCTORS_APPOINTMENT_DETAILS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DOCTORS_AVAILABLE" EntityType="Self.DOCTORS_AVAILABLE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PATIENTS" EntityType="Self.PATIENTS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PATIENTS_APPOINTMENTS" EntityType="Self.PATIENTS_APPOINTMENTS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SPECIALIZATIONS" EntityType="Self.SPECIALIZATIONS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SPECIALTY" EntityType="Self.SPECIALTY" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WEEK_DAYS" EntityType="Self.WEEK_DAYS" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_CITIES_COUNTRIES" Association="Self.FK_CITIES_COUNTRIES">
+      <End Role="COUNTRIES" EntitySet="COUNTRIES" />
+      <End Role="CITIES" EntitySet="CITIES" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DOCTORS_APPOINTMENT_DETAILS_Doctors" Association="Self.FK_DOCTORS_APPOINTMENT_DETAILS_Doctors">
+      <End Role="DOCTORS" EntitySet="DOCTORS" />
+      <End Role="DOCTORS_APPOINTMENT_DETAILS" EntitySet="DOCTORS_APPOINTMENT_DETAILS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DOCTORS_APPOINTMENT_DETAILS_DOCTORS_AVAILABLE" Association="Self.FK_DOCTORS_APPOINTMENT_DETAILS_DOCTORS_AVAILABLE">
+      <End Role="DOCTORS_AVAILABLE" EntitySet="DOCTORS_AVAILABLE" />
+      <End Role="DOCTORS_APPOINTMENT_DETAILS" EntitySet="DOCTORS_APPOINTMENT_DETAILS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DOCTORS_AVAILABLE_Doctors" Association="Self.FK_DOCTORS_AVAILABLE_Doctors">
+      <End Role="DOCTORS" EntitySet="DOCTORS" />
+      <End Role="DOCTORS_AVAILABLE" EntitySet="DOCTORS_AVAILABLE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DOCTORS_SPECIALIZATIONS" Association="Self.FK_DOCTORS_SPECIALIZATIONS">
+      <End Role="SPECIALIZATIONS" EntitySet="SPECIALIZATIONS" />
+      <End Role="DOCTORS" EntitySet="DOCTORS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DOCTORS_SPECIALTY1" Association="Self.FK_DOCTORS_SPECIALTY1">
+      <End Role="SPECIALTY" EntitySet="SPECIALTY" />
+      <End Role="DOCTORS" EntitySet="DOCTORS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DOCTORS_SPECIALTY2" Association="Self.FK_DOCTORS_SPECIALTY2">
+      <End Role="SPECIALTY" EntitySet="SPECIALTY" />
+      <End Role="DOCTORS" EntitySet="DOCTORS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DOCTORS_SPECIALTY3" Association="Self.FK_DOCTORS_SPECIALTY3">
+      <End Role="SPECIALTY" EntitySet="SPECIALTY" />
+      <End Role="DOCTORS" EntitySet="DOCTORS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PATIENTS_APPOINTMENTS_DOCTORS_APPOINTMENT_DETAILS" Association="Self.FK_PATIENTS_APPOINTMENTS_DOCTORS_APPOINTMENT_DETAILS">
+      <End Role="DOCTORS_APPOINTMENT_DETAILS" EntitySet="DOCTORS_APPOINTMENT_DETAILS" />
+      <End Role="PATIENTS_APPOINTMENTS" EntitySet="PATIENTS_APPOINTMENTS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PATIENTS_APPOINTMENTS_PATIENTS1" Association="Self.FK_PATIENTS_APPOINTMENTS_PATIENTS1">
+      <End Role="PATIENTS" EntitySet="PATIENTS" />
+      <End Role="PATIENTS_APPOINTMENTS" EntitySet="PATIENTS_APPOINTMENTS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SPECIALTY_SPECIALIZATIONS" Association="Self.FK_SPECIALTY_SPECIALIZATIONS">
+      <End Role="SPECIALIZATIONS" EntitySet="SPECIALIZATIONS" />
+      <End Role="SPECIALTY" EntitySet="SPECIALTY" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

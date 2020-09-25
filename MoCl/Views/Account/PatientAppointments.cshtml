@@ -1,0 +1,50 @@
+﻿@model IEnumerable<MoCl.Models.PATIENTS_APPOINTMENTS>
+
+@{
+    ViewBag.Title = "PatientAppointments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>قائمة مواعيدي</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            تاريخ الموعد
+        </th>
+        <th>
+            تاريخ الحجز
+        </th>
+        <th>
+            حالة الموعد
+        </th>
+        <th>
+            تم الحجز بواسطة
+        </th>
+        <th></th>
+    </tr>
+    
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @(DateTime.Parse(Html.DisplayFor(modelItem => item.AppointmentDate).ToString()).ToShortDateString())
+        </td>
+        <td>
+            @(DateTime.Parse(Html.DisplayFor(modelItem => item.BookingDate).ToString()).ToShortDateString())
+        </td>
+        <td>
+            @Html.Raw(Func.AppointmentStatus(int.Parse(Html.DisplayFor(modelItem => item.Id).ToString())))
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BookedBy)
+        </td>
+        <td>
+            @if (item.AppointmentDate+item.DOCTORS_APPOINTMENT_DETAILS.Starting > DateTime.Now)
+            {
+                <a href="/Appointments/DeleteAppointment?AppId=@item.Id"><button class="btn btn-danger btn-sm">إلغاء الحجز</button></a>
+            }
+        </td>
+    </tr>
+}
+
+</table>

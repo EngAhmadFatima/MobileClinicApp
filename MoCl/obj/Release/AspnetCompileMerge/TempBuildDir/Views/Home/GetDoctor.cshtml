@@ -1,0 +1,125 @@
+﻿
+@{
+    ViewBag.Title = "GetDoctor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>GetDoctor</h2>
+
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+<table>
+    <tr>
+        <td>
+            Serch: <input type="text" id="textserch" />
+            <input type="button" id="btnserch" value="Serch" />
+            <input type="button" id="btnAllDoctors" value="Get All Doctors" />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div id="">
+
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div>
+    <select id="UpdatePanel" hidden="hidden">
+        <option>Doctors</option>
+    </select>
+</div>
+
+@section Scripts{
+
+    <script>
+
+
+        $(document).ready(function () {
+
+            $("#btnAllDoctors").click(function () {
+                $("#UpdatePanel").html("<option>Doctors</option>");
+                $("#UpdatePanel").show();
+                $.get("@Url.Action("GetAllDoctors", "Home")", "", function (data) {
+                    
+                    $.each(data, function (i, val) {
+                        var option = "<option>" + val.FirstName +" "+val.LastName+ "</option>";
+                        $("#UpdatePanel").append(option);
+                    })
+                },"json")
+            });
+
+
+
+
+            $("#textserch").change(function () {
+                $("#UpdatePanel").html("<option>Doctors</option>");
+                $("#UpdatePanel").show();
+                $.get("@Url.Action("GetDoctorsWithParameter", "Home")", { preFix: $('#textserch').val() }, function (data) {
+                    
+                    $.each(data, function (i, val) {
+                        var option = "<option>" + val.FirstName +" "+val.LastName+ "</option>";
+                        $("#UpdatePanel").append(option);
+                    })
+                },"json")
+                //--------
+                @*$.ajax({
+                    url:"@Url.Action("GetDoctorsWithParameter", "Home")" ,
+                    data: { preFix: $('#textserch').val() },
+                type: "GET",
+                dataType: "json",
+                success: function () {
+                  
+                    loadData(data);
+                },
+                error: function () {
+                    alert("Faild! Pleas try agin");
+                }
+            });*@
+                //--------------
+            });
+
+            function loadData(data) {
+                
+
+                var tab = $('<table class="myTable"></table>');
+                var thead = $('<thead></thead>');
+                thead.append('<th>Doctor Id</th>');
+                thead.append('<th>Doctor Name</th>');
+                tab.append(thead);
+
+                $.each(data, function (i, val) {
+                    var trow = $('<tr></tr>');
+                    trow.append('<td>' + val.Id + '</td>');
+                    trow.append('<td>' + val.FirstName + ' ' + val.LastName + '</td>');
+                    tab.append(trow);
+                });
+
+                $("tr:odd", tab).css("background-color", "gray");
+                $("#UpdatePanel").html(tab);
+            };
+        });
+
+
+
+        
+
+                @*$.ajax({
+                    url:"@Url.Action("GetAllDoctors", "Home")" ,
+            data: "",
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+                        
+            $.each(data, function (i, val) { alert("uuuuuuu"); })
+            //  loadData(data);
+        },
+        error: function () {
+            alert("Faild! Pleas try agin");
+        }
+        });*@
+    </script>
+
+}

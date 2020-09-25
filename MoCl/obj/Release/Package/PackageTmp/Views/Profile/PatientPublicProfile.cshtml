@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "PatientPublicProfile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int? PatientId = ViewBag.PatientId;
+    int? DoctorId = ViewBag.DoctorId;
+
+    MoCl.Models.MOCL_DBEntities db = new MoCl.Models.MOCL_DBEntities();
+
+    //List<MoCl.Models.DOCTORS_APPOINTMENT_DETAILS> DocApp = db.DOCTORS_APPOINTMENT_DETAILS.Where(a => a.DoctorId == DoctorId).ToList();
+    List<MoCl.Models.PATIENTS_APPOINTMENTS> PatApp = db.PATIENTS_APPOINTMENTS.Where(a => a.PatientId == PatientId & a.DOCTORS_APPOINTMENT_DETAILS.DoctorId == DoctorId).ToList();
+}
+<h2>الملف الشخصي للمريض: @db.PATIENTS.Find(PatientId).FirstName @db.PATIENTS.Find(PatientId).LastName</h2>
+<hr />
+<br />
+<h3>سجل الزيارات</h3>
+<table class="table table-hover" >
+    <tr>
+        <th>تاريخ الموعد</th>
+        <th>وقت الموعد</th>
+        <th>الحالة</th>
+        <th>قام بالحجز</th>
+        <th>تاريخ الحجز</th>
+    </tr>
+    @foreach (MoCl.Models.PATIENTS_APPOINTMENTS item in PatApp)
+    {
+        <tr>
+            <td>@item.AppointmentDate.Value.ToShortDateString()</td>
+            <td>(@item.DOCTORS_APPOINTMENT_DETAILS.Starting - @item.DOCTORS_APPOINTMENT_DETAILS.Ending)</td>
+            <td>@Func.AppointmentStatus(item.Id)</td>
+            <td>@item.BookedBy</td>
+            <td>@item.BookingDate.Value.ToShortDateString()</td>
+        </tr>
+    }
+</table>

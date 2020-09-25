@@ -1,0 +1,199 @@
+﻿@model MoCl.Models.DOCTORS_AVAILABLE
+
+@{
+    ViewBag.Title = "AddDoctorDayAvailable";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int DoctorId = (int)Session["DoctorId"];
+}
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<style>
+ .sss{
+          display: block;
+  width:auto;
+  height: 34px;
+  max-width:100%;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.428571429;
+  color: #555555;
+  vertical-align: middle;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+          transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    }
+ h4{font-family:'ar';}
+</style>
+<h2 style="font-family:ar">إضافة يوم عمل جديد</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group" hidden="hidden">
+            @Html.LabelFor(model => model.DoctorId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DoctorId, new { htmlAttributes = new { @class = "form-control", @id = "txt_DocId" } })
+                @Html.ValidationMessageFor(model => model.DoctorId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <div class="col-md-10">
+             <strong> اليوم:</strong>  
+                <br /> <label>
+                    <select id="sel" class="sss">
+                        <option>اختر يوم</option>
+                        <option value="Saturday">السبت</option>
+                        <option value="Sunday">الأحد</option>
+                        <option value="Monday">الاثنين</option>
+                        <option value="Tuesday">الثلاثاء</option>
+                        <option value="Wednesday">الأربعاء</option>
+                        <option value="Thursday">الخميس</option>
+                        <option value="Friday">الجمعة</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group" hidden="hidden">
+            @Html.LabelFor(model => model.Day, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Day, new { htmlAttributes = new { @class = "form-control", @id = "txt_day" } })
+                @Html.ValidationMessageFor(model => model.Day, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+              <strong> ساعة البدأ:</strong> 
+                @Html.EditorFor(model => model.StartingTime, new { htmlAttributes = new { @class = "form-control", @id = "txt_start" } })
+                @Html.ValidationMessageFor(model => model.StartingTime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+              <strong>ساعة الانتهاء:</strong>  
+                @Html.EditorFor(model => model.EndingTime, new { htmlAttributes = new { @class = "form-control", @id = "txt_end" } })
+                @Html.ValidationMessageFor(model => model.EndingTime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+             <strong> مدة كل موعد: (دقيقة)</strong>  
+                @Html.EditorFor(model => model.AppointmentDuration, new { htmlAttributes = new { @class = "form-control", @id = "txt_Duration" } })
+                @Html.ValidationMessageFor(model => model.AppointmentDuration, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <input type="submit" value="إضافة" class="btn btn-primary btn-lg" />
+            </div>
+        </div>
+        <hr />
+        <div class="form-group" id="details" hidden="hidden">
+            <div class="col-md-10">
+              <strong> ساعات العمل: </strong> <label class="label label-info" id="l1"></label> ساعة <br />    
+               <strong>عدد المواعيد:</strong> <label class="label label-info" id="l2"></label> موعد <br />      
+            
+               <input type="button" id="btn-det" value="تفاصيل" class="btn btn-default btn-sm" />
+            </div>
+        </div>
+
+        <div class="form-group" id="detailstbl" hidden="hidden">
+            <div class="col-md-10">
+                <table class="table table-hover" id="appTable">
+                    <thead>
+                        <tr>
+                            <th>وقت الموعد</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+
+    </div>
+}
+            @section Scripts{
+
+                <script>
+
+                    $(document).ready(function () {
+                        $('#txt_DocId').val(@DoctorId);
+                        $('#sel').on('change', function () {
+                            var optionSelected = $("option:selected", this);
+                            var valueSelected = this.value;
+                            $("#txt_day").val(valueSelected);
+                        });
+                        $('#txt_Duration').on('input', function () {
+                            var start = $('#txt_start').val();
+                            var end = $('#txt_end').val();
+                            var dur = $('#txt_Duration').val() / 60;
+                            var diff = (new Date("1970-1-1 " + end) - new Date("1970-1-1 " + start)) / 1000 / 60 / 60;
+                            var count = diff / dur;
+                            $('#l1').html(diff);
+                            $('#l2').html(count);
+                            $('#details').show();
+                        });
+                        $('#btn-det').click(function () {
+                            $('#appTable').find('tbody').empty();
+                            var start = $('#txt_start').val()+':00';
+                            var end = $('#txt_end').val() + ':00';
+                            var dur = $('#txt_Duration').val().replace('00:','') / 60;
+                            var diff = (new Date("1970-1-1 " + end) - new Date("1970-1-1 " + start)) / 1000 / 60 / 60;
+                            var count = diff / dur;
+                            for (i = 0; i < count; i++) {
+                                var ff = new Date("1970-1-1 " + start);
+                                ff.setMinutes(ff.getMinutes() + (dur * 60));
+                                var NewTim = ff.toTimeString();
+                                NewTim = NewTim.split(' ')[0].trimRight();
+                                $('#appTable').append('<tr><td>' + start + ' - ' + NewTim + '</td></tr>');
+                                start = NewTim.trimRight();
+                            }
+                            $('#detailstbl').show();
+                        });
+                        $('#txt_start').on('input', function () {
+                            $('#detailstbl').hide();
+                            var start = $('#txt_start').val();
+                            var end = $('#txt_end').val();
+                            var dur = $('#txt_Duration').val() / 60;
+                            var diff = (new Date("1970-1-1 " + end) - new Date("1970-1-1 " + start)) / 1000 / 60 / 60;
+                            var count = diff / dur;
+                            $('#l1').html(diff);
+                            $('#l2').html(count);
+                            $('#details').show();
+                        });
+                        $('#txt_end').on('input', function () {
+                            $('#detailstbl').hide();
+                            var start = $('#txt_start').val();
+                            var end = $('#txt_end').val();
+                            var dur = $('#txt_Duration').val() / 60;
+                            var diff = (new Date("1970-1-1 " + end) - new Date("1970-1-1 " + start)) / 1000 / 60 / 60;
+                            var count = diff / dur;
+                            $('#l1').html(diff);
+                            $('#l2').html(count);
+                            $('#details').show();
+                        });
+                        $('#txt_Duration').on('change', function () { var bb = $('#txt_Duration').val(); $('#txt_Duration').val('00:' + bb); });
+                    });
+
+                </script>
+
+            }

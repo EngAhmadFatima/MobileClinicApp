@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewBag.Title = "DoctorPublicProfile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int DoctorId = ViewBag.DoctorId;
+    MoCl.Models.MOCL_DBEntities db = new MoCl.Models.MOCL_DBEntities();
+    MoCl.Models.DOCTOR doc = db.DOCTORS.Find(DoctorId);
+    MoCl.Models.SPECIALIZATION spe = db.SPECIALIZATIONS.Find(doc.specialization);
+
+    MoCl.Models.SPECIALTY sp1 = db.SPECIALTies.Find(doc.Specialty1);
+    MoCl.Models.SPECIALTY sp2 = doc.Specialty2 != null ? db.SPECIALTies.Find(doc.Specialty2) : null;
+    MoCl.Models.SPECIALTY sp3 = doc.Specialty3 != null ? db.SPECIALTies.Find(doc.Specialty3) : null;
+
+    MoCl.Models.COUNTRy cun = db.COUNTRIES.Find(1);
+
+    MoCl.Models.CITy cty = db.CITIES.Find(doc.City);
+
+
+
+    string DoctorName = doc.FullName;
+    string DoctorSpecialization = spe.Specialization1;
+    string DoctorSpecialty1 = sp1.Specialty1;
+    string DoctorSpecialty2 = sp2!=null?sp2.Specialty1:"";
+    string DoctorSpecialty3 = sp3 != null ? sp3.Specialty1 : "";
+    string DoctorCountry = cun.Country1;
+    string DoctorCity = cty.City_ar;
+    string DoctorAddress = doc.Address;
+    string DoctorPhone = doc.Phone;
+    string DoctorMobile = doc.Mobile;
+    
+   int count = db.DOCTORS_AVAILABLE.Where(a => a.DoctorId == doc.Id).Count();
+
+}
+
+<h2>الدكتور: @DoctorName</h2><br />
+<h3>التخصص: @DoctorSpecialization</h3>
+<h3>الإختصاص: @DoctorSpecialty1 / @DoctorSpecialty2 / @DoctorSpecialty3</h3>
+<h3>المدينة: @DoctorCity</h3>
+<h3>العنوان: @DoctorAddress</h3>
+<h3>هاتف: @DoctorPhone</h3>
+<h3>جوال: @DoctorMobile</h3>
+
+@if (count > 0)
+{
+    <button id="btn_book" class="btn btn-success btn-lg"> حجز موعد</button>
+}
+else
+{
+    <label class="label label-danger">خاصية حجز موعد عبر الموقع غير متوفرة حتى اللآن !!</label>
+}

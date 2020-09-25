@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MobileClinic_DBModelStoreContainer" CdmEntityContainer="MobileClinic_DBEntities">
+    <EntitySetMapping Name="DOCTORS">
+      <EntityTypeMapping TypeName="MobileClinic_DBModel.DOCTOR">
+        <MappingFragment StoreEntitySet="DOCTORS">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DOCTORS_APPOINTMENT_DETAILS">
+      <EntityTypeMapping TypeName="MobileClinic_DBModel.DOCTORS_APPOINTMENT_DETAILS">
+        <MappingFragment StoreEntitySet="DOCTORS_APPOINTMENT_DETAILS">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+          <ScalarProperty Name="DoctorAvilableId" ColumnName="DoctorAvilableId" />
+          <ScalarProperty Name="Starting" ColumnName="Starting" />
+          <ScalarProperty Name="Ending" ColumnName="Ending" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DOCTORS_AVAILABLE">
+      <EntityTypeMapping TypeName="MobileClinic_DBModel.DOCTORS_AVAILABLE">
+        <MappingFragment StoreEntitySet="DOCTORS_AVAILABLE">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+          <ScalarProperty Name="Day" ColumnName="Day" />
+          <ScalarProperty Name="StartingTime" ColumnName="StartingTime" />
+          <ScalarProperty Name="EndingTime" ColumnName="EndingTime" />
+          <ScalarProperty Name="AppointmentDuration" ColumnName="AppointmentDuration" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PATIENTS">
+      <EntityTypeMapping TypeName="MobileClinic_DBModel.PATIENT">
+        <MappingFragment StoreEntitySet="PATIENTS">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PATIENTS_APPOINTMENTS">
+      <EntityTypeMapping TypeName="MobileClinic_DBModel.PATIENTS_APPOINTMENTS">
+        <MappingFragment StoreEntitySet="PATIENTS_APPOINTMENTS">
+          <ScalarProperty Name="AppointmentDate" ColumnName="AppointmentDate" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+          <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+          <ScalarProperty Name="AppointmentId" ColumnName="AppointmentId" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "PatientDashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int PatId = (int)Session["PatientId"];
+}
+
+<h2>لوحة التحكم</h2>
+
+<a href="/Account/PatientAppointments?PatId=@PatId"><button class="btn btn-info">قائمة المواعيد الخاصة بي</button></a>
+<br /><br />
+<a href="/Account/PatientDoctors?PatId=@PatId"><button class="btn btn-info">قائمة الأطباء الخاصة بي</button></a>

@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "sendSMS";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+<h2>sendSMS</h2>
+
+PHONE:<input type="text" id="Phone" value="" /><br />
+MESSAGE: <input type="text" id="message" value="" /><br />
+<input type="button" id="btn" value="SEND" />
+
+
+<script>
+    $(document).ready(function () {
+
+        $('#btn').click(function () {
+            alert("ffff");
+            var phone = $('#Phone').val();
+            var password = $('#message').val();
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("sendajaxSMS", "Home")",
+                data: { phone: phone, Message: password },
+                error: function () { alert("ERROR"); },
+            success: function (data) {
+                alert(data);
+            }
+        });
+    });
+
+    });
+
+</script>

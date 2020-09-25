@@ -1,0 +1,70 @@
+﻿@model IEnumerable<MoCl.Models.DOCTORS_APPOINTMENT_DETAILS>
+
+@{
+    ViewBag.Title = "DoctorDayAppointments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string SelectedDate = ViewBag.SelectedDate;
+    int DoctorId = ViewBag.DoctorId;
+    // string SelectedDay = ViewBag.Day.ToString().Trim();
+    DateTime Date = DateTime.Parse(SelectedDate);
+    string SelectedDay = Date.DayOfWeek.ToString();
+    MoCl.Models.MOCL_DBEntities db = new MoCl.Models.MOCL_DBEntities();
+    int PatientId = 0;
+    if (Session["PatientId"] != null) { PatientId = int.Parse(Session["PatientId"].ToString()); }
+    int counter = 0;
+    string h = "";
+    // if(Session["DoctorId"] == null) { Session["DoctorId"] = ""; }
+}
+<style>
+  h1,h2,h3,h4{font-family:ar;}
+</style>
+<h2>قائمة المواعيد</h2>
+<hr />
+<h3><label class="label label-primary">الطبيب:  @db.DOCTORS.Find(DoctorId).FirstName  @db.DOCTORS.Find(DoctorId).LastName</label></h3>
+<h3><label class="label label-primary">تاريخ الموعد:  @Func.ArabicDayName(SelectedDay) @SelectedDate</label></h3>
+<br /><br />
+<table class="table table-hover">
+    <tr class="label-default">
+        <th>وقت الموعد</th>
+        <th>حالة الموعد</th>
+        @if (Session["DoctorName"] != null) { <th>.</th>}
+        @if (Session["DoctorName"] != null) {<th>.</th>}
+    </tr>
+
+@foreach (var item in Model)
+{
+        counter++;
+        <tr @Func.IfExpird(Func.NewDateTime(Date, item.Starting),(int?)Session["DoctorId"])>
+            <td>
+               
+               ( @Html.DisplayFor(modelItem => item.Starting) - @Html.DisplayFor(modelItem => item.Ending) )
+            </td>
+            <td>@Html.Raw(h=Func.Booked(item.Id, Date, PatientId,(int?)Session["DoctorId"]))</td>
+           
+                @if (Session["DoctorName"] != null)
+                {
+                    <td>
+                        @if (h == "محجوز")
+                        {
+                            int patid = (int)db.PATIENTS_APPOINTMENTS.Where(m => m.AppointmentId == item.Id).First().PatientId;
+                            @Html.ActionLink(db.PATIENTS.Find(patid).FirstName+" "+ db.PATIENTS.Find(patid).LastName, "PatientPublicProfile", "Profile",new { PatientId = patid , DoctorId  = DoctorId },null);
+                       // <a href="Profile/PatientPublicProfile?PatientId=@PatientId&DoctorId=@DoctorId"> </a>
+                        }
+                    </td>
+                    <td>
+                        @if (h == "محجوز" && Func.NewDateTime(Date, item.Starting) >= DateTime.Now)
+                        {
+                            <a href="/Appointments/DeleteAppointment?AppId=@item.PATIENTS_APPOINTMENTS.Where(a=>a.AppointmentId==item.Id && a.AppointmentDate== Date).FirstOrDefault().Id"><button class="btn btn-danger btn-sm">إلغاء الحجز</button></a>
+                        }
+                    </td>
+                }
+        </tr>
+
+    h = "";
+}
+</table>
+
+@if (counter == 0) {<label>لا يوجد أي موعد في هذا اليوم</label> }
+
+<br /><hr /><a href="/Appointments/Index?DoctorId=@DoctorId">عودة للتقويم</a>

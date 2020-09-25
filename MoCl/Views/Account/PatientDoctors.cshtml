@@ -1,0 +1,80 @@
+﻿@model IEnumerable<MoCl.Models.DOCTOR>
+
+@{
+    ViewBag.Title = "PatientDoctors";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>أطبائي</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            الاسم
+        </th>
+        <th>
+            البلد
+        </th>
+        <th>
+            المدينة
+        </th>
+        <th>
+           العنوان
+        </th>
+        <th>
+            الهاتف
+        </th>
+        <th>
+            الجوال
+        </th>
+        <th>
+            الاختصاص
+        </th>
+        <th>
+           التخصص 1
+        </th>
+        <th>
+            التخصص 2
+        </th>
+        <th>
+           التخصص 3
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Country)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CITy1.City_ar)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Mobile)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SPECIALIZATION1.Specialization1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SPECIALTY.Specialty1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SPECIALTY4.Specialty1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SPECIALTY5.Specialty1)
+        </td>
+    </tr>
+}
+
+</table>

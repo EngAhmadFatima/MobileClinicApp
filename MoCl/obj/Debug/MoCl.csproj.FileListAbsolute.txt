@@ -1,0 +1,132 @@
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\ApplicationInsights.config
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\roslyn\csc.exe
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\roslyn\System.Collections.Immutable.dll
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\roslyn\System.Reflection.Metadata.dll
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\roslyn\vbc.exe
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\roslyn\VBCSCompiler.exe
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\roslyn\VBCSCompiler.exe.config
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\MoCl.dll.config
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\MoCl.dll
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\MoCl.pdb
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\Antlr3.Runtime.dll
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\EntityFramework.dll
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\EntityFramework.SqlServer.dll
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\Microsoft.AI.Agent.Intercept.dll
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\Microsoft.AI.DependencyCollector.dll
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\Microsoft.AI.PerfCounterCollector.dll
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\Microsoft.AI.ServerTelemetryChannel.dll
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\Microsoft.AI.Web.dll
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\Microsoft.AI.WindowsServer.dll
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\Microsoft.ApplicationInsights.dll
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\Microsoft.Owin.dll
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\Microsoft.Web.Infrastructure.dll
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\Newtonsoft.Json.dll
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\Owin.dll
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\System.Net.Http.Formatting.dll
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\System.Web.Helpers.dll
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\System.Web.Http.dll
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\System.Web.Http.WebHost.dll
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\System.Web.Mvc.dll
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\System.Web.Optimization.dll
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\System.Web.Razor.dll
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\System.Web.WebPages.Deployment.dll
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\System.Web.WebPages.dll
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\System.Web.WebPages.Razor.dll
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\WebGrease.dll
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\EntityFramework.xml
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\EntityFramework.SqlServer.xml
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\Microsoft.AI.DependencyCollector.xml
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\Microsoft.AI.ServerTelemetryChannel.xml
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\Microsoft.AI.Web.xml
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\Microsoft.AI.WindowsServer.xml
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\Microsoft.ApplicationInsights.xml
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\Microsoft.Owin.xml
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\System.Net.Http.Formatting.xml
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\System.Web.Http.xml
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\System.Web.Http.WebHost.xml
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\System.Web.Helpers.xml
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\System.Web.Mvc.xml
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\System.Web.Optimization.xml
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\System.Web.Razor.xml
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\System.Web.WebPages.xml
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\System.Web.WebPages.Deployment.xml
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\System.Web.WebPages.Razor.xml
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\Antlr3.Runtime.pdb
+D:\visual studio 2015\Projects\MoCl\MoCl\bin\Newtonsoft.Json.xml
+D:\visual studio 2015\Projects\MoCl\MoCl\obj\Debug\MoCl.csprojResolveAssemblyReference.cache
+D:\visual studio 2015\Projects\MoCl\MoCl\obj\Debug\MoCl.dll
+D:\visual studio 2015\Projects\MoCl\MoCl\obj\Debug\MoCl.pdb
+F:\IT\Projects\MoCl\MoCl\bin\ApplicationInsights.config
+F:\IT\Projects\MoCl\MoCl\bin\roslyn\csc.exe
+F:\IT\Projects\MoCl\MoCl\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+F:\IT\Projects\MoCl\MoCl\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+F:\IT\Projects\MoCl\MoCl\bin\roslyn\Microsoft.CodeAnalysis.dll
+F:\IT\Projects\MoCl\MoCl\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+F:\IT\Projects\MoCl\MoCl\bin\roslyn\Microsoft.CSharp.Core.targets
+F:\IT\Projects\MoCl\MoCl\bin\roslyn\Microsoft.VisualBasic.Core.targets
+F:\IT\Projects\MoCl\MoCl\bin\roslyn\System.Collections.Immutable.dll
+F:\IT\Projects\MoCl\MoCl\bin\roslyn\System.Reflection.Metadata.dll
+F:\IT\Projects\MoCl\MoCl\bin\roslyn\vbc.exe
+F:\IT\Projects\MoCl\MoCl\bin\roslyn\VBCSCompiler.exe
+F:\IT\Projects\MoCl\MoCl\bin\roslyn\VBCSCompiler.exe.config
+F:\IT\Projects\MoCl\MoCl\bin\MoCl.dll.config
+F:\IT\Projects\MoCl\MoCl\bin\MoCl.dll
+F:\IT\Projects\MoCl\MoCl\bin\MoCl.pdb
+F:\IT\Projects\MoCl\MoCl\bin\Antlr3.Runtime.dll
+F:\IT\Projects\MoCl\MoCl\bin\EntityFramework.dll
+F:\IT\Projects\MoCl\MoCl\bin\EntityFramework.SqlServer.dll
+F:\IT\Projects\MoCl\MoCl\bin\Microsoft.AI.Agent.Intercept.dll
+F:\IT\Projects\MoCl\MoCl\bin\Microsoft.AI.DependencyCollector.dll
+F:\IT\Projects\MoCl\MoCl\bin\Microsoft.AI.PerfCounterCollector.dll
+F:\IT\Projects\MoCl\MoCl\bin\Microsoft.AI.ServerTelemetryChannel.dll
+F:\IT\Projects\MoCl\MoCl\bin\Microsoft.AI.Web.dll
+F:\IT\Projects\MoCl\MoCl\bin\Microsoft.AI.WindowsServer.dll
+F:\IT\Projects\MoCl\MoCl\bin\Microsoft.ApplicationInsights.dll
+F:\IT\Projects\MoCl\MoCl\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+F:\IT\Projects\MoCl\MoCl\bin\Microsoft.Owin.dll
+F:\IT\Projects\MoCl\MoCl\bin\Microsoft.Web.Infrastructure.dll
+F:\IT\Projects\MoCl\MoCl\bin\Newtonsoft.Json.dll
+F:\IT\Projects\MoCl\MoCl\bin\Owin.dll
+F:\IT\Projects\MoCl\MoCl\bin\System.Net.Http.Formatting.dll
+F:\IT\Projects\MoCl\MoCl\bin\System.Web.Helpers.dll
+F:\IT\Projects\MoCl\MoCl\bin\System.Web.Http.dll
+F:\IT\Projects\MoCl\MoCl\bin\System.Web.Http.WebHost.dll
+F:\IT\Projects\MoCl\MoCl\bin\System.Web.Mvc.dll
+F:\IT\Projects\MoCl\MoCl\bin\System.Web.Optimization.dll
+F:\IT\Projects\MoCl\MoCl\bin\System.Web.Razor.dll
+F:\IT\Projects\MoCl\MoCl\bin\System.Web.WebPages.Deployment.dll
+F:\IT\Projects\MoCl\MoCl\bin\System.Web.WebPages.dll
+F:\IT\Projects\MoCl\MoCl\bin\System.Web.WebPages.Razor.dll
+F:\IT\Projects\MoCl\MoCl\bin\WebGrease.dll
+F:\IT\Projects\MoCl\MoCl\bin\EntityFramework.xml
+F:\IT\Projects\MoCl\MoCl\bin\EntityFramework.SqlServer.xml
+F:\IT\Projects\MoCl\MoCl\bin\Microsoft.AI.DependencyCollector.xml
+F:\IT\Projects\MoCl\MoCl\bin\Microsoft.AI.ServerTelemetryChannel.xml
+F:\IT\Projects\MoCl\MoCl\bin\Microsoft.AI.Web.xml
+F:\IT\Projects\MoCl\MoCl\bin\Microsoft.AI.WindowsServer.xml
+F:\IT\Projects\MoCl\MoCl\bin\Microsoft.ApplicationInsights.xml
+F:\IT\Projects\MoCl\MoCl\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+F:\IT\Projects\MoCl\MoCl\bin\Microsoft.Owin.xml
+F:\IT\Projects\MoCl\MoCl\bin\System.Net.Http.Formatting.xml
+F:\IT\Projects\MoCl\MoCl\bin\System.Web.Http.xml
+F:\IT\Projects\MoCl\MoCl\bin\System.Web.Http.WebHost.xml
+F:\IT\Projects\MoCl\MoCl\bin\System.Web.Helpers.xml
+F:\IT\Projects\MoCl\MoCl\bin\System.Web.Mvc.xml
+F:\IT\Projects\MoCl\MoCl\bin\System.Web.Optimization.xml
+F:\IT\Projects\MoCl\MoCl\bin\System.Web.Razor.xml
+F:\IT\Projects\MoCl\MoCl\bin\System.Web.WebPages.xml
+F:\IT\Projects\MoCl\MoCl\bin\System.Web.WebPages.Deployment.xml
+F:\IT\Projects\MoCl\MoCl\bin\System.Web.WebPages.Razor.xml
+F:\IT\Projects\MoCl\MoCl\bin\Antlr3.Runtime.pdb
+F:\IT\Projects\MoCl\MoCl\bin\Newtonsoft.Json.xml
+F:\IT\Projects\MoCl\MoCl\obj\Debug\MoCl.csprojResolveAssemblyReference.cache
+F:\IT\Projects\MoCl\MoCl\obj\Debug\MoCl.dll
+F:\IT\Projects\MoCl\MoCl\obj\Debug\MoCl.pdb

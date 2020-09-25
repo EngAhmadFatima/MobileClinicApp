@@ -1,0 +1,400 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+            h1, h2, h3, h4 {
+        font-family: ar;
+    }
+        .nav > li {
+    line-height: 4;
+    position: relative;
+    display: block;
+}
+        .navbar-inverse .navbar-brand {
+    color: #999999;
+    font-size: 33px;
+}
+            .nav-tabs {
+    margin-bottom: 15px;
+}
+.sign-with {
+    margin-top: 25px;
+    padding: 20px;
+}
+    </style>
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $('#PatLogin').click(function () { $('#myModal').modal('show'); });
+            $('#DocLogin').click(function () { $('#DoctorModal').modal('show'); });
+            $('#txt-phone').keypress(function (e) {
+                var key = e.which;
+                if (key == 13) { $('#txt-password').focus(); }
+            });
+            $('#txt-password').keypress(function (e) {
+                var key = e.which;
+                if (key == 13) { $('#btn-Login').focus();}
+            });
+           
+            function dd() {
+                         
+                var FirstName = $('#txt_RegFirstName').val();
+                var LastName = $('#txt-RegLastName').val();
+                var RegPhone = $('#txt-Regphone').val();
+                var City = $('#CitySelect').find(":selected").val();
+                var RegPassword = $('#txt_Regpassword').val();
+                var Re_Password = $('#txt_Re_password').val();
+                var BirthDate = $('#txt-RegBirthDate').val();
+                
+
+                if (FirstName == "" || LastName == "" || RegPhone == "" || City == null || RegPassword == "" || Re_Password == "" || BirthDate == null) {
+                    $('#errorReg').html("يرجى ملأ كافة الحقول !!");
+                    $('#errorReg').show();
+                } else {
+                    $('#errorReg').hide();
+                    if (RegPassword != Re_Password) {
+                        $('#errorReg').html("كلمتا المرور غير متطابقتين !!");
+                        $('#errorReg').show();
+                    } else {
+                        $('#errorReg').hide();
+                        $.ajax({
+                            type: "POST",
+                            url: "@Url.Action("PatientAjaxRegistration", "Account")",
+                            data: { FirstName: FirstName, LastName: LastName, Phone: RegPhone, Country: 'Syria', City: City, BirthDate: BirthDate, Password: RegPassword },
+                        error: function () { alert("Error"); },
+                        success: function (data1) {
+                            if (data1 == "Found") {
+                                $('#errorReg').html("رقم الجوال مستخدم بالفعل !! " + "<br/> <a href='#'>هل نسيت كلمة المرور؟</a>");
+                                $('#errorReg').show();
+                            }
+                            else { alert(data1); location.reload(); }
+                        }
+                    });
+
+                    }
+                };
+                return fResult;
+            }
+
+
+            $('#btn_PatReg').click(function () {
+               alert( dd());
+            });
+
+            $('#btn-Login').click(function () {
+                var phone = $('#txt-phone').val();
+                var password = $('#txt-password').val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("PatientAjaxLogin", "Account")",
+                    data: { Username: phone, Password: password },
+                    error: function () { $('#errorlog').show(); },
+                    success: function (data) {
+                        location.reload();
+                    }
+                });
+            });
+
+            $('#btn-DocLogin').click(function () {
+                var username = $('#txt_username').val();
+                var password = $('#txt_DocPassword').val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("DoctorAjaxLogin", "Account")",
+                    data: { Username: username, Password: password },
+                error: function () { $('#errorlog').show(); },
+                success: function (data) {
+                    location.reload();
+                }
+            });
+        });
+
+        $('#PatLogout').click(function () {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("PatientAjaxLogout", "Account")",
+                data: {},
+                success: function (data) {
+                    location.reload();
+                }
+            });
+        });
+
+    });
+    </script>
+</head>
+<body style="font-family:ar">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("حكيم", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("الرئيسية", "Index", "Home")</li>
+                    <li>@Html.ActionLink("من نحن", "About", "Home")</li>
+                    <li>@Html.ActionLink("تواصل معنا", "Contact", "Home")</li>
+                </ul>
+                <ul class="nav navbar-nav navbar-left">
+                   <li>
+                       @if (Session["PatientName"] != null)
+                       {
+                       <div class="btn-group ">
+                           <button id="UserName" type="button" class="btn btn-default" onclick="location.href='@Url.Action("PatientDashboard", "Account")'">@Session["PatientName"]</button>
+                           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                               <span class="caret"></span>
+                               <span class="sr-only">Toggle Dropdown</span>
+                           </button>
+                           <ul class="dropdown-menu">
+                               <li><a href="#" id="PatLogout">تسجيل الخروج</a></li>
+                           </ul>
+                       </div>
+                       }
+                       else if (Session["DoctorName"] != null)
+                       {
+                        <div class="btn-group ">
+                            <button id="UserName" type="button" class="btn btn-default" onclick="location.href='@Url.Action("Index", "Appointments", new { DoctorId = Session["DoctorId"] })'">د. @Session["DoctorName"]</button>
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("تسجيل الخروج", "DoctorLogout", "Account", null, null)</li>
+                                <li>@Html.ActionLink("الملف الشخصي", "DoctorDashboard", "Account", null, null)</li>
+                            </ul>
+                        </div>
+                       }
+                       else
+                       {//@Html.ActionLink("دخول الأعضاء", "PatientLogin", "Account", null, new  { @class= "nav-btn",@Style= " display: inline-block;" }) @Html.ActionLink("دخول الأطباء", "DoctorLogin", "Account", null, new { @class = "nav-btn", @Style = " display: inline-block;",@id="Doc_Log" })}
+                           <a href="#" id="PatLogin" style="display:inline-block">دخول الأعضاء  &nbsp; <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></a>
+                           <a href="#" id="DocLogin" style="display:inline-block">دخول الأطباء  &nbsp; <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></a>
+                       }
+                   </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+             aria-hidden="true" style="text-align:right">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            ×
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            دخول الأعضاء
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-10" style="border-right: 1px dotted #C2C2C2;padding-right: 30px;">
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#Login" data-toggle="tab">تسجيل الدخول</a></li>
+                                    <li><a href="#Registration" data-toggle="tab">اشتراك</a></li>
+                                </ul>
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="Login">
+                                        <form role="form" class="form-horizontal">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">
+                                                    رقم الجوال
+                                                </label>
+                                                <div class="col-md-9">
+                                                    <input type="text" class="form-control" id="txt-phone" placeholder="رقم الجوال" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">
+                                                    كلمة المرور
+                                                </label>
+                                                <div class="col-md-9">
+                                                    <input type="password" class="form-control" id="txt-password" placeholder="كلمة المرور" />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-offset-3 col-md-9">
+                                                    <div class="alert alert-danger" role="alert" id="errorlog" hidden="hidden">رقم الجوال أو كلمة المرور غير صحيحة !!</div>
+                                                    <button type="button" id="btn-Login" class="btn btn-primary btn-sm">
+                                                        تسجيل
+                                                    </button>
+                                                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" aria-hidden="true">
+                                                        إالغاء
+                                                    </button><br /><br />
+                                                    <a href="javascript:;">هل نسيت كلمة المرور؟</a><br />
+                                                    ليس لديك حساب؟ اضغط على اشتراك
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="tab-pane" id="Registration">
+                                        <form role="form" class="form-horizontal">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">
+                                                    الاسم الأول
+                                                </label>
+                                                <div class="col-md-9">
+                                                    <input type="text" class="form-control" id="txt_RegFirstName" placeholder="الاسم الأول" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">
+                                                    الكنية
+                                                </label>
+                                                <div class="col-md-9">
+                                                    <input type="text" class="form-control" id="txt-RegLastName" placeholder="الكنية" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">
+                                                    تاريخ الميلاد
+                                                </label>
+                                                <div class="col-md-9">
+                                                    <input type="date" class="form-control" id="txt-RegBirthDate" placeholder="الكنية" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">
+                                                    رقم الجوال
+                                                </label>
+                                                <div class="col-md-9">
+                                                    <input type="text" class="form-control" id="txt-Regphone" placeholder="رقم الجوال" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">
+                                                   المدينة
+                                                </label>
+                                                <div class="col-md-9">
+                                                   <select class="form-control" id="CitySelect">
+                                                       <option value="دمشق">دمشق</option>
+                                                       <option>حلب</option>
+                                                   </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">
+                                                    كلمة المرور
+                                                </label>
+                                                <div class="col-md-9">
+                                                    <input type="password" class="form-control" id="txt_Regpassword" placeholder="كلمة المرور" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">
+                                                   كرر كلمة المرور
+                                                </label>
+                                                <div class="col-md-9">
+                                                    <input type="password" class="form-control" id="txt_Re_password" placeholder="كرر كلمة المرور" />
+                                                </div>
+                                            </div><br />
+                                            <div class="row">
+                                                <div class="col-md-offset-3 col-md-9">
+                                                    <div class="alert alert-danger" role="alert" id="errorReg" hidden="hidden"></div>
+                                                    <button type="button" class="btn btn-primary btn-sm" id="btn_PatReg">
+                                                        حفظ ومتابعة
+                                                    </button>
+                                                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" aria-hidden="true">
+                                                        إالغاء
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="DoctorModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+             aria-hidden="true" style="text-align:right">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            ×
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            دخول الأطباء
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-10" style="border-right: 1px dotted #C2C2C2;padding-right: 30px;">
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#Login" data-toggle="tab">تسجيل الدخول</a></li>
+                                </ul>
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="Login">
+                                        <form role="form" class="form-horizontal">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">
+                                                    اسم المستخدم
+                                                </label>
+                                                <div class="col-md-9">
+                                                    <input type="text" class="form-control" id="txt_username" placeholder="اسم المستخدم" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">
+                                                    كلمة المرور
+                                                </label>
+                                                <div class="col-md-9">
+                                                    <input type="password" class="form-control" id="txt_DocPassword" placeholder="كلمة المرور" />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-offset-3 col-md-9">
+                                                    <div class="alert alert-danger" role="alert" id="errorlog" hidden="hidden">رقم الجوال أو كلمة المرور غير صحيحة !!</div>
+                                                    <button type="button" id="btn-DocLogin" class="btn btn-primary btn-sm">
+                                                        تسجيل
+                                                    </button>
+                                                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" aria-hidden="true">
+                                                        إالغاء
+                                                    </button><br /><br />
+                                                    <a href="javascript:;">هل نسيت كلمة المرور؟</a><br />
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>حكيم - @DateTime.Now.Year &copy;</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

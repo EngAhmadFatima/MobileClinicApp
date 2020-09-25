@@ -1,0 +1,176 @@
+﻿@model MoCl.Models.PATIENTS_APPOINTMENTS
+@{
+    ViewBag.Title = "DoctorBookAppointment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    MoCl.Models.MOCL_DBEntities db = new MoCl.Models.MOCL_DBEntities();
+    string AppointmentDate = ViewBag.AppointmentDate;
+    int DoctorId = ViewBag.DoctorId;
+    DateTime Date = DateTime.Parse(AppointmentDate);
+    string SelectedDay = Date.DayOfWeek.ToString();
+    int AppointmentId = ViewBag.AppointmentId;
+    // string AppointmentDate = ViewBag.AppointmentDate;
+    MoCl.Models.DOCTORS_APPOINTMENT_DETAILS dad = db.DOCTORS_APPOINTMENT_DETAILS.Find(AppointmentId);
+    int PatientId;
+    DateTime DateNow = DateTime.Today;
+    string UserName = (Session["DoctorName"] == null ? "" : "الطبيب");
+}
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<link href="~/Content/Loader_sm.css" rel="stylesheet" />
+<h2>حجز موعد</h2>
+<br />
+<h3><label class="label label-success">الطبيب:  @db.DOCTORS.Find(DoctorId).FirstName  @db.DOCTORS.Find(DoctorId).LastName</label></h3>
+<h3><label class="label label-info">تاريخ الموعد:  @Func.ArabicDayName(SelectedDay) <span id="lbl_AppDate">@AppointmentDate</span> </label></h3>
+<h3><label class="label label-warning">وقت الموعد: (@dad.Starting  -  @dad.Ending)</label></h3>
+<br /><br />
+<div class="tab-pane active" id="Login">
+    <form role="form" class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-12">
+                الجوال:
+                <br />
+                <input type="text" id="txt_phone" class="form-control" placeholder="الجوال" style="display:inline-block" />
+                <input type="button" class="btn btn-info btn-sm" id="btn-SerchPhon" value="بحث" /> 
+                <label id="lbl-loader" class="loader_sm" hidden="hidden"></label>
+                <label id="lbl_phone"> </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-12">
+                الاسم:
+                <input type="text" id="txt_FirstName" class="form-control" placeholder="الاسم" /><br />
+            </div>
+            <div class="col-md-12">
+                الكنية:
+                <input type="text" id="txt_LastName" class="form-control" placeholder="الكنية" /><br />
+            </div>
+            <div class="col-md-12">
+                اسم الأب:
+                <input type="text" id="txt_Father" class="form-control" placeholder="اسم الأب" /><br />
+            </div>
+            <div id="div_id" class="col-md-12">
+                المعرف:
+                <input type="text" id="txt_Id" hidden="hidden" readonly="readonly" class="form-control" placeholder="المعرف" /><br />
+            </div>
+        </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" id="btn_Register" class="btn btn-success">
+                        تسجيل مريض جديد
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </button>
+                    <br /><br />
+                </div>
+            </div>
+        <button  id="btn_book" class="btn btn-success" hidden="hidden">حجز موعد <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
+        
+</form>
+    <input type="hidden" Id="Today" value="@DateNow.ToShortDateString()" />
+    <input type="hidden" Id="hid_AppId" value="@AppointmentId" />
+    <input type="hidden" id="hid_Bookedby" value="@UserName" />
+</div>
+<script>
+
+    $(document).ready(function () {
+        $("#btn_book").hide();
+        $("#div_id").hide();
+        $("#btn-SerchPhon").click(function () {
+            $("#lbl-loader").show();
+            var Phone = $("#txt_phone").val();
+
+            $.get("@Url.Action("SearchPatienthWithParameter", "Appointments")", { phone: Phone }, function (data) {
+                if (data != "null") {
+                    $("#lbl_phone").css('color', 'red');
+                    $("#lbl_phone").html("مستخدم");
+                    $("#txt_FirstName").val(data.FirstName);
+                    $("#txt_LastName").val(data.LastName);
+                    $("#txt_Father").val(data.FatherName);
+                    $("#txt_Id").val(data.Id);
+                    $("#div_id").show();
+                    $("#btn_book").show();
+                    $("#btn_Register").hide();
+                }
+                else {
+                    $("#lbl_phone").css('color','green');
+                    $("#lbl_phone").html("غير مستخدم");
+                    $("#txt_FirstName").val("");
+                    $("#txt_LastName").val("");
+                    $("#txt_Father").val("");
+                    $("#txt_Id").val("");
+                    $("#div_id").hide();
+                    $("#btn_book").hide();
+                    $("#btn_Register").show();
+                }
+
+            }, "json");
+            $("#lbl-loader").hide();
+        });
+
+
+        $("#btn_Register").click(function () {
+
+            if ($("#lbl_phone").html() == "غير مستخدم") {
+
+                var phone = $("#txt_phone").val();
+                var firstName = $("#txt_FirstName").val();
+                var lastName = $("#txt_LastName").val();
+                var fatherName = $("#txt_Father").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("PatientAjaxRegistration1", "Account")",
+                    data: { FirstName: firstName, LastName: lastName, FatherName:fatherName, Mobile:phone },
+                error: function () { alert("Error"); },
+                success: function (data1) {
+                    if (data1 == "فشل التسجيل !!") {
+                        alert(data1);
+                    }
+                    else {
+                        $("#txt_Id").val(data1);
+                        $("#div_id").show();
+                        $("#btn_book").show();
+                        $("#btn_Register").hide();
+                    }
+                }
+                });
+
+            } else {
+                alert("يجب أن يكون رقم الجوال غير مستخدم !!");
+            }
+        });
+
+        $("#btn_book").click(function () {
+
+            var a = $("#txt_Id").val();
+            var b = $("#hid_AppId").val();
+            var c = $("#lbl_AppDate").html();
+            var d = 1;
+            var e = $("#hid_Bookedby").val();
+            var f = $("#Today").val();
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("AjaxBookAppointment", "Appointments")",
+                data: { PatId: a, AppId: b, AppDate: c, Stat: d, Boby: e, BoDate:f },
+            error: function () { alert("Error"); },
+            success: function (data1) {
+                if (data1 == "فشل التسجيل !!") {
+                    alert(data1);
+                }
+                else {
+                    alert(data1);
+                    window.location.replace("Index?DoctorId="+@DoctorId);
+                }
+            }
+        });
+
+        });
+
+    });
+
+
+    $('#btn-Register').click(function () {
+        if ($('#RegSec').is(":visible") == true) {
+            $('#RegSec').show();
+        } else { $('#RegSec').hide(); }
+    });
+</script>

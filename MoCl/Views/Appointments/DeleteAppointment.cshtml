@@ -1,0 +1,60 @@
+﻿@model MoCl.Models.PATIENTS_APPOINTMENTS
+
+@{
+    ViewBag.Title = "DeleteAppointment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>حذف موعد</h2>
+
+<h3>هل أنت متأكد من حذف هذا الموعد؟</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            تاريخ الموعد
+        </dt>
+
+        <dd>
+            @DateTime.Parse(Html.DisplayFor(model => model.AppointmentDate).ToString()).ToShortDateString()
+        </dd>
+
+        <dt>
+            قام بالحجز
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BookedBy)
+        </dd>
+
+        <dt>
+            تاريخ الحجز
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BookingDate)
+        </dd>
+
+        <dt>
+            حالة الموعد
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.APPOINTMENT_STATE.State_en)
+        </dd>
+
+        <dt>
+            اسم المريض
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PATIENT.FirstName) @Html.DisplayFor(model => model.PATIENT.FatherName) @Html.DisplayFor(model => model.PATIENT.LastName)
+        </dd>
+    </dl>
+
+    <div class="form-actions no-color">
+        <a href="/Appointments/DeleteConfirmed?Id=@Model.Id"><button class="btn btn-danger">حذف الموعد</button></a>
+        @*<input type="submit" value="حذف الموعد" class="btn btn-danger" /> |*@
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</div>

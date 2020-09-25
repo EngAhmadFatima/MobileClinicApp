@@ -1,0 +1,307 @@
+﻿@model MoCl.Models.DOCTOR
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string cou = ViewBag.Country;
+}
+<link href="~/Content/Loader.css" rel="stylesheet" />
+<style>
+    .hit-the-floor {
+color: #fff;
+font-size: 12em;
+font-weight: bold;
+font-family: Helvetica;
+text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.2), 0 20px 20px rgba(0,0,0,.15);
+}
+    body{text-align:center; font-family:ar; align-items: center;}
+    .sss{
+          display: block;
+  width:auto;
+  height: 34px;
+  max-width:100%;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.428571429;
+  color: #555555;
+  vertical-align: middle;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+          transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    }
+    
+</style>
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script>
+    //$(document).ready(function () {
+    //    $('#sel').on('change', function (e) {
+    //        var optionSelected = $("option:selected", this);
+    //        var valueSelected = this.value;
+    //        $("p").text(valueSelected);
+    //        var url = window.location.href;
+    //        window.location.replace("Home/Index?Country=" + valueSelected);
+    //    });
+    //});
+</script>
+
+<div><h1 class="hit-the-floor" style="color:whitesmoke; font-size:130px; font-family:ar">حكيم</h1></div><br />
+<div><h2 style="font-family:ar">أكبر تجمع أطباء في سوريا</h2></div><br />
+<div id="div-advance" hidden="hidden">
+    <label>المدينة
+    <select id="sel-city" class="sss">
+        <option value="0">اختر مدينة</option>
+        <option value="1">دمشق</option>
+        <option>ريف دمشق</option>
+        <option>حلب</option>
+        <option>حمص</option>
+        <option>حماه</option>
+        <option>اللاذقية</option>
+        <option>طرطوس</option>
+        <option>السويداء</option>
+        <option>القنيطرة</option>
+        <option>الحسكة</option>
+        <option>دير الزور</option>
+        <option>الرقة</option>
+        <option>ادلب</option>
+        <option>القامشلي</option>
+    </select>
+</label>
+       <label> الاختصاص
+    <select id="spe1" class="sss">
+        <option value="0">اختر اختصاص</option>
+    </select>
+</label>
+    <label id="human" hidden="hidden">
+        التخصص
+        <select id="spe2" class="sss" >
+            
+        </select>
+    </label>
+    <br />
+    <input id="btn-serch-advance" type="button" class="btn btn-primary" value="بحث" style="width:20%" />
+</div>
+<br />
+<div id="div-serch" style="align-items:center">
+    <input id="txt-serch" type="text" placeholder="ابحث عن طبيب" style="width:80%; display:inline-block; height:50%; border-radius:4px; border-style:solid; border-color:rgba(0,0,0,.1)" />
+    <input id="btn-serch" type="button" style="display:inline-block" class="btn btn-sm btn-primary" value="بحث" />
+</div>
+<br />
+<div>
+    <input type="button" id="btn-advance" class="btn btn-default btn-sm"  value="بحث متقدم" />
+    <input type="button" id="btn-normal" class="btn btn-default btn-sm" value="بحث عادي" />
+    </div>
+<br />
+
+<label id="lbl-loader" class="loader" ></label>
+
+<div id="worning" class="alert alert-danger" role="alert" hidden="hidden"> للأسف ... لا تتوفر أية نتائج !!</div>
+<table id="tbl-doctors"  class="table table-hover" hidden="hidden">
+    <thead>
+        <tr  class="label-default">
+            <th hidden="hidden"></th>
+            <th>الطبيب</th>
+            <th>التخصص</th>
+            <th>المدينة</th>
+            <th>العنوان</th>
+            <th>الهاتف</th>
+            <th>موعد</th>
+        </tr>
+    </thead>
+    <tbody >
+        
+    </tbody>
+</table>
+
+
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+@section Scripts{
+
+    <script>
+
+        $("#lbl-loader").show();
+        $("#btnGo").hide();
+        $("#btn-normal").hide();
+
+
+        $(document).ready(function () {
+
+            $.get("@Url.Action("GetAllSpecializations", "Home")", {}, function (data) {
+                $.each(data, function (i, val) {
+                    var option = "<option value="+val.Id+">" + val.Specialization1 + "</option>";
+                    $("#spe1").append(option);
+                });
+            }, "json");
+            //---------------
+
+            $("#lbl-loader").hide();
+            //---------------
+
+            $("#btn-advance").click(function () {
+                $("#div-advance").show();
+                $("#div-serch").hide();
+                $("#btn-advance").hide();
+                $("#btn-normal").show();
+                $("#tbl-doctors").hide();
+            });
+            //--------------
+
+            $("#btn-normal").click(function () {
+                $("#div-advance").hide();
+                $("#div-serch").show();
+                $("#btn-advance").show();
+                $("#btn-normal").hide();
+                $("#tbl-doctors").hide();
+            });
+            //------------
+
+            $("#txt-serch").keypress(function (e) {
+                if (e.keyCode == 13) { $("#btn-serch").focus(); }
+            });
+            //-------------
+            $("#btn-serch").click(function () {
+                $("#worning").hide();
+                $("#tbl-doctors td").remove();
+                $("#lbl-loader").show();
+                var word = $("#txt-serch").val().trim();
+                $.get("@Url.Action("GetDoctorsWithParameter", "Home")", { preFix: word }, function (data) {
+                    if (data != "null") {
+                        $.each(data, function (i, val) {
+                            var row = "<tr id='UpdatePanel' style='text-align:right' ></tr>";
+                            var option = "<tr  id='UpdatePanel' style='text-align:right'><td hidden='hidden'>" + val.Id + "</td><td><a href='Profile/DoctorPublicProfile?DoctorId=" + val.Id + "'>" + val.FullName + "</a></td><td>" + val.Specialty + "</td><td>" + val.City + "</td><td>" + val.Address + "</td><td>" + val.Phone + "</td><td><a href='/Appointments/Index?DoctorId=" + val.Id + "'>حجز موعد</a></td></tr>";
+                            $("#tbl-doctors").append(option);
+                        });
+                        $("#tbl-doctors").show();
+                    } else {
+                        $("#tbl-doctors").hide();
+                        $("#worning").show();
+                    }
+                    $("#lbl-loader").hide();
+                }, "json");
+                //-------------------------
+
+            
+            });
+            //--------------
+
+            $('#spe1').change(function () {
+                $("#spe2 option").remove();
+                $("#spe2").append("<option value='0'>كافة التخصصات</option>");
+                $("#lbl-loader").show();
+                var optionSelected = $("option:selected", this);
+                var valueSelected = this.value;
+                $.get("@Url.Action("GetSpecialtyWithParameter", "Home")", { preFix: valueSelected }, function (data) {
+                    if (data != "null") {
+                        $.each(data, function (i, val) {
+                            var option = "<option value=" + val.Id + ">" + val.Specialty1 + "</option>";
+                            $("#spe2").append(option);
+                            $("#human").show();
+                        });
+                    } else {
+                        $("#human").hide();
+                    }
+
+                }, "json");
+                $("#lbl-loader").hide();
+            });
+            //------------
+
+            $("#btn-serch-advance").click(function () {
+                $("#worning").hide();
+                $("#tbl-doctors td").remove();
+                $("#lbl-loader").show();
+                var city = $("#sel-city").val();
+                var spe1 = $("#spe1").val();
+                var spe2 = $("#spe2").val();
+              
+
+                if (city != "0" && spe1 != "0")
+                {
+                    $.get("@Url.Action("GetDoctorsWith3Parameters", "Home")", { x: city, y: spe1, z: spe2 }, function (data) {
+                        if (data != "null") {
+                            $.each(data, function (i, val) {
+                                var row = "<tr id='UpdatePanel' style='text-align:right' ></tr>";
+                                var option = "<tr  id='UpdatePanel' style='text-align:right'><td hidden='hidden'>" + val.Id + "</td><td>" + val.FullName + "</td><td>" + val.Specialty + "</td><td>" + val.City + "</td><td>" + val.Address + "</td><td>" + val.Phone + "</td><td><a href=''>تفاصيل</a></td></tr>";
+                                $("#tbl-doctors").append(option);
+                            });
+                            $("#tbl-doctors").show();
+                        } else {
+                            $("#tbl-doctors").hide();
+                            $("#worning").show();
+                        }
+                        $("#lbl-loader").hide();
+                    }, "json");
+                }
+                else {
+                    if (city == "0") {
+                        alert("يجب أن تختار مدينة !!");
+                    }
+                    if (spe1 == "0") {
+                        alert("يجب أن تختار اختصاص !!");
+                    }
+                    $("#lbl-loader").hide();
+                }
+             
+            });
+
+
+        });//end documint redy
+        //-----------
+
+
+    </script>
+
+}
+
+@*$.ajax({
+                url:"@Url.Action("GetAllDoctors", "Home")" ,
+        data: "",
+    type: "GET",
+    dataType: "json",
+    success: function (data) {
+
+        $.each(data, function (i, val) { alert("uuuuuuu"); })
+        //  loadData(data);
+    },
+    error: function () {
+        alert("Faild! Pleas try agin");
+    }
+    });*@
+
+@*<script>
+    $(document).ready(function () {
+
+        //  $('#sel').on('change', function () {
+        $("#btnAllDoctors").click(function () {
+
+            $("#selectDoc").html("<option>Doctors</option>");
+            $("#selectDoc").show();
+
+            $.get("@Url.Action("allDoctors", "Home")", "", function (data) {
+                $.each(data, function (i, val) {
+                    var option = "<option>" + val.FirstName + " " + val.LastName + "</option>";
+                    $("#selectDoc").append(option);
+                })
+            }, "json")
+        });
+
+        @*$("#textserch").change(function () {
+            $("#UpdatePanel").html("<option>Doctors</option>");
+            $("#UpdatePanel").show();
+            $.get("@Url.Action("GetDoctorsWithParameter", "Home")", { preFix: $('#textserch').val() }, function (data) {
+
+                $.each(data, function (i, val) {
+                    var option = "<option>" + val.FirstName + " " + val.LastName + "</option>";
+                    $("#UpdatePanel").append(option);
+                })
+            }, "json")
+        });*@
+    @*});*@
+@*</script>*@
+
+
+

@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewBag.Title = "test";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<style>
+.cd-user-modal {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+ 
+.cd-user-modal.is-visible {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+
+<h2>test</h2>
+
+<nav class="main-nav">
+    <ul>
+        <!-- all your main menu links here -->
+        <li><a class="cd-signin" href="#0">Sign in</a></li>
+        <li><a class="cd-signup" href="#0">Sign up</a></li>
+    </ul>
+</nav>
+
+<div class="cd-user-modal">
+    <!-- this is the entire modal form, including the background -->
+    <div class="cd-user-modal-container">
+        <!-- this is the container wrapper -->
+
+        <ul class="cd-switcher">
+            <li><a href="#0">Sign in</a></li>
+            <li><a href="#0">New account</a></li>
+        </ul>
+
+    </div>
+</div>
+
+<div class="cd-user-modal">
+    <div class="cd-user-modal-container">
+
+        <!-- switcher tab here -->
+
+        <div id="cd-login">
+
+            <!-- form here -->
+
+            <p class="cd-form-bottom-message"><a href="#0">Forgot your password?</a></p>
+        </div>
+
+        <div id="cd-signup">
+
+            <!-- form here -->
+
+        </div>
+
+        <div id="cd-reset-password">
+
+            <!-- form here -->
+
+            <p class="cd-form-bottom-message"><a href="#0">Back to log-in</a></p>
+        </div>
+    </div>
+    <a href="#0" class="cd-close-form">Close</a>
+</div>
+
+<script>
+    $('.hide-password').on('click', function () {
+        var $this = $(this),
+          $password_field = $this.prev('input');
+
+        ('password' == $password_field.attr('type')) ? $password_field.attr('type', 'text') : $password_field.attr('type', 'password');
+        ('Hide' == $this.text()) ? $this.text('Show') : $this.text('Hide');
+        //focus and move cursor to the end of input field
+        $password_field.putCursorAtEnd();
+    });
+</script>

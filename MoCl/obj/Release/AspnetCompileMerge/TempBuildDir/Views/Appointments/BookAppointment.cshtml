@@ -1,0 +1,250 @@
+﻿@model MoCl.Models.PATIENTS_APPOINTMENTS
+
+@{
+    ViewBag.Title = "BookAppointment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int AppointmentId = ViewBag.AppointmentId;
+    String AppointmentDate = ViewBag.AppointmentDate;
+    int? DoctorId=null;
+    DateTime DateNow = DateTime.Today;
+    string UserName = (Session["DoctorName"] == null ? "المريض" : "الطبيب");
+}
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<style>
+    h1, h2, h3, h4 {
+        font-family: ar;
+    }
+    .nav-tabs {
+    margin-bottom: 15px;
+}
+.sign-with {
+    margin-top: 25px;
+    padding: 20px;
+}
+</style>
+
+@{
+    if (Session["PatientId"] != null)
+    {
+        MoCl.Models.MOCL_DBEntities db = new MoCl.Models.MOCL_DBEntities();
+        int  PatientId = int.Parse(Session["PatientId"].ToString());
+
+        DateTime Date = DateTime.Parse(AppointmentDate);
+        MoCl.Models.DOCTORS_APPOINTMENT_DETAILS dad = db.DOCTORS_APPOINTMENT_DETAILS.Find(AppointmentId);
+        MoCl.Models.PATIENT pat = db.PATIENTS.Find(PatientId);
+        MoCl.Models.DOCTOR doc = db.DOCTORS.Find(dad.DoctorId);
+        DoctorId = dad.DoctorId;
+
+        <div id="Content">
+            <h2>حجز موعد</h2>
+            <br /><br />
+            <h4><label class="label label-info lg">اسم الطبيب:</label> @doc.FirstName @doc.LastName</h4>
+            <h4><label class="label label-info lg">اسم المريض:</label> @pat.FirstName @pat.LastName</h4>
+            <h4><label class="label label-info lg">تاريخ الموعد:</label> @Date.ToShortDateString()</h4>
+            <h4><label class="label label-info lg">وقت الموعد:</label> (@dad.Starting  -  @dad.Ending)</h4>
+            <h4><label class="label label-info lg">الوقت المتبقي للموعد:</label> @Func.DifirinceDates(Func.NewDateTime(Date.Date, dad.Starting), DateTime.Now) </h4>
+
+            <p><label> </label> </p>
+
+            @*<form action="BookAppointment" method="post">
+                @Html.HiddenFor(m => m.PatientId)=PatientId
+                @Html.HiddenFor(m => m.AppointmentId)
+                @Html.HiddenFor(m => m.AppointmentDate)
+                @Html.HiddenFor(m => m.Status)
+                @Html.HiddenFor(m => m.BookedBy)="ddd"
+                @Html.HiddenFor(m => m.BookingDate)
+                <br />
+                <input class="btn btn-primary" type="submit" name="" value="حجز موعد" />
+            </form>*@
+            <input type="hidden" id="txt_Id" value="@pat.Id" /><br />
+            <input type="hidden" Id="hid_AppId" value="@AppointmentId" />
+            <span id="lbl_AppDate" hidden="hidden">@AppointmentDate</span>
+            <input type="hidden" id="hid_Bookedby" value="@UserName" />
+            <input type="hidden" Id="Today" value="@DateNow.ToShortDateString()" />
+            
+            <button id="btn_book" class="btn btn-success" hidden="hidden">حجز موعد <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
+            <br />
+        </div>
+    }
+    else
+    {
+        <h2>يجب أن تقوم بالتسجيل أولاً</h2>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+            التسجيل
+        </button>
+    }
+}
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    ×
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    الاشتراك / تسجيل الدخول
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-10" style="border-right: 1px dotted #C2C2C2;padding-right: 30px;">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#Login" data-toggle="tab">تسجيل الدخول</a></li>
+                            <li><a href="#Registration" data-toggle="tab">اشتراك</a></li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="Login">
+                                <form role="form" class="form-horizontal">
+                                    <div class="form-group">
+                                        <label for="Phone" class="col-sm-2 control-label">
+                                            رقم الجوال
+                                        </label>
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" id="txt-phone" placeholder="رقم الجوال" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Password" class="col-sm-2 control-label">
+                                            كلمة المرور
+                                        </label><br />
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="txt-password" placeholder="كلمة المرور" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-10">
+                                            <button type="button" id="btn-Login" class="btn btn-primary btn-sm">
+                                                تسجيل
+                                            </button><br />
+                                            <a href="javascript:;">هل نسيت كلمة المرور؟</a><br />
+                                            ليس لديك حساب؟ اضغط على اشتراك 
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="tab-pane" id="Registration">
+                                <form role="form" class="form-horizontal">
+                                    <div class="form-group">
+                                        <label for="email" class="col-sm-2 control-label">
+                                            Name
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <select class="form-control">
+                                                        <option>Mr.</option>
+                                                        <option>Ms.</option>
+                                                        <option>Mrs.</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <input type="text" class="form-control" placeholder="Name" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email" class="col-sm-2 control-label">
+                                            Email
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <input type="email" class="form-control" id="email" placeholder="Email" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="mobile" class="col-sm-2 control-label">
+                                            Mobile
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <input type="email" class="form-control" id="mobile" placeholder="Mobile" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password" class="col-sm-2 control-label">
+                                            Password
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <input type="password" class="form-control" id="password" placeholder="Password" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <button type="button" class="btn btn-primary btn-sm">
+                                                حفظ ومتابعة
+                                            </button>
+                                            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" aria-hidden="true">
+                                                إالغاء
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+<script>
+    $(document).ready(function () {
+
+        $('#btn-Login').click(function () {
+            var phone = $('#txt-phone').val();
+            var password = $('#txt-password').val();
+
+            var AppointmentId = $('#AppointmentId').val();
+            var AppointmentDate = $('#AppointmentDate').val();
+
+            $.ajax({
+                type:"POST",
+                url:"@Url.Action("PatientAjaxLogin", "Account")",
+                data: { Username:phone , Password:password },
+                success: function (data) {
+                    location.reload();
+                }
+            })
+
+        });
+
+        $("#btn_book").click(function () {
+
+            var a = $("#txt_Id").val();
+            var b = $("#hid_AppId").val();
+            var c = $("#lbl_AppDate").html();
+            var d = 1;
+            var e = $("#hid_Bookedby").val();
+            var f = $("#Today").val();
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("AjaxBookAppointment", "Appointments")",
+                data: { PatId: a, AppId: b, AppDate: c, Stat: d, Boby: e, BoDate:f },
+                error: function () { alert("Error"); },
+                success: function (data1) {
+                    if (data1 == "فشل التسجيل !!") {
+                        alert(data1);
+                    }
+                    else {
+                        alert(data1);
+                        window.location.replace("Index?DoctorId="+@DoctorId);
+                    }
+                }
+            });
+
+        });
+
+
+    });
+</script>
+}
+

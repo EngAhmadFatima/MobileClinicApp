@@ -1,0 +1,11 @@
+﻿
+@{
+    ViewBag.Title = "DoctorDashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int DocId = (int)Session["DoctorId"];
+}
+
+<h2>لوحة التحكم</h2>
+<hr />
+<a href="/Account/DoctorEditInfo?DocId=@DocId"><button class="btn btn-info">تعديل البيانات الشخصية</button></a>
+<a href="/Account/DoctorPatients?DocId=@DocId"><button class="btn btn-info">مرضى عيادتي</button></a>

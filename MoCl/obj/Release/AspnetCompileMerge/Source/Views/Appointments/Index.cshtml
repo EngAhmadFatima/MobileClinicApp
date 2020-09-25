@@ -1,0 +1,110 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    DateTime GetDate = ViewBag.Date;
+    int Year = GetDate.Year; int Month = GetDate.Month; int Day = GetDate.Day;
+    int DoctorId = ViewBag.DoctorId;
+    bool DocLog = Session["DoctorName"] == null ? false : true;
+}
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+<style>
+    .btn {
+    }
+
+    td {
+        text-align: center;
+    }
+
+    th {
+        text-align: center;
+    }
+
+    #Calender-Main {
+        font-size: xx-large;
+    }
+
+    #Calender-Heder {
+        font-size: x-large;
+    }
+
+    #Calender-item {
+        font-size: large;
+    }
+</style>
+
+<style>
+    .btn-SharedStyle{
+        margin:5px; width:110px; height:100px;
+    }
+    .btn-Shadow{
+-moz-box-shadow: inset 0 0 5px #888;
+-webkit-box-shadow: inset 0 0 5px#888;
+box-shadow: 0 0 5px #888;
+    }
+    #Btn-Disabled{
+        
+        pointer-events: none;
+        cursor: not-allowed;opacity: 0.65;
+        filter: alpha(opacity=65);
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+    #Btn-NoApp{
+
+    }
+    #Btn-FullApp{
+        
+    }
+    #Btn-Old{
+        background-color:#bdafaf;
+    }
+    #Btn-PartialApp{
+                border-color:red; border-style:solid; 
+        -moz-box-shadow: inset 0 0 5px #ff6a00;
+-webkit-box-shadow: inset 0 0 5px#ff6a00;
+box-shadow: 0 0 5px #ff6a00;
+    }
+    #Btn-Today{
+        border-color:red; border-style:solid; 
+        -moz-box-shadow: inset 0 0 5px #ff0000;
+-webkit-box-shadow: inset 0 0 5px#ff0000;
+box-shadow: 0 0 5px #ff0000;
+    }
+</style>
+<br />
+<div>
+    @if (Session["DoctorName"] != null)
+{ <a href="Appointments/AddDoctorDayAvailable"><button class="btn btn-default">اضافة يوم عمل جديد <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></a> }
+    </div>
+
+<div class="jumbotron" style="float:right; text-align:center; background-color:white">
+    <div style="text-align:center">
+        <button class="btn btn-primary btn-lg" onclick="location.href='@Url.Action("Index", "Appointments/Index",new {DoctorId, Date = GetDate.AddMonths(-1)})'"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> السابق</button>
+        <button id="Calender-Main" class="btn btn-primary btn-lg">@Func.ArabicMonthName(GetDate.Month)  @GetDate.Year  </button>
+        <button class="btn btn-primary btn-lg" onclick="location.href='@Url.Action("Index", "Appointments/Index",new {DoctorId, Date = GetDate.AddMonths(+1)})'"> التالي <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></button>
+    </div>
+
+@for (int i = 1; i < 32; i++)
+{
+    if (DateTime.DaysInMonth(GetDate.Year, GetDate.Month) >= i)
+    {
+        DateTime dd = new DateTime(GetDate.Year, GetDate.Month, i);
+
+<button class="btn btn-default btn-Shadow btn-SharedStyle" 
+        @Html.Raw(Func.TheDayButton(Year, Month, i, DoctorId,DocLog)) 
+        onclick="location.href='@Url.Action("Index", "Appointments/DoctorDayAppointments", new { DoctorId = DoctorId, SelectedDate = dd.ToShortDateString() })'">@i 
+    <br /><strong> @Func.ArabicDayName(dd.DayOfWeek.ToString().Trim())</strong> 
+    <br />@Html.Raw(Func.Appointmits(Year, Month, i, DoctorId, DocLog))</button>
+    }
+
+}
+</div>
+ <div>
+
+</div>
+
+<!-- -->

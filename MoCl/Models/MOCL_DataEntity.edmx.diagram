@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9527b479a1ae477aaa651e54a78ca657" Name="Diagram1" ZoomLevel="65">
+        <EntityTypeShape EntityType="MobileClinic_DBModel.APPOINTMENT_STATE" Width="2.25" PointX="9.625" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MobileClinic_DBModel.CITy" Width="1.5" PointX="4.875" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MobileClinic_DBModel.COUNTRy" Width="1.5" PointX="2.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MobileClinic_DBModel.DOCTOR" Width="1.5" PointX="7.375" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MobileClinic_DBModel.DOCTORS_APPOINTMENT_DETAILS" Width="1.5" PointX="10.125" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MobileClinic_DBModel.DOCTORS_AVAILABLE" Width="1.5" PointX="13.375" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="MobileClinic_DBModel.PATIENT" Width="1.5" PointX="16.5" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MobileClinic_DBModel.PATIENTS_APPOINTMENTS" Width="2.125" PointX="13.5" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MobileClinic_DBModel.SPECIALIZATION" Width="1.5" PointX="2.125" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MobileClinic_DBModel.SPECIALTY" Width="1.5" PointX="4.5" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MobileClinic_DBModel.sysdiagram" Width="1.5" PointX="12.5" PointY="17.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MobileClinic_DBModel.WEEK_DAYS" Width="1.5" PointX="11.25" PointY="16.375" IsExpanded="true" />
+        <AssociationConnector Association="MobileClinic_DBModel.FK_APPOINTMENT_STATE_APPOINTMENT_STATE" ManuallyRouted="false" />
+        <AssociationConnector Association="MobileClinic_DBModel.FK_APPOINTMENT_STATE_APPOINTMENT_STATE1" ManuallyRouted="false" />
+        <AssociationConnector Association="MobileClinic_DBModel.FK_PATIENTS_APPOINTMENTS_APPOINTMENT_STATE" ManuallyRouted="false" />
+        <AssociationConnector Association="MobileClinic_DBModel.FK_CITIES_COUNTRIES" ManuallyRouted="false" />
+        <AssociationConnector Association="MobileClinic_DBModel.FK_DOCTORS_APPOINTMENT_DETAILS_Doctors" ManuallyRouted="false" />
+        <AssociationConnector Association="MobileClinic_DBModel.FK_DOCTORS_AVAILABLE_Doctors" ManuallyRouted="false" />
+        <AssociationConnector Association="MobileClinic_DBModel.FK_DOCTORS_SPECIALIZATIONS" ManuallyRouted="false" />
+        <AssociationConnector Association="MobileClinic_DBModel.FK_DOCTORS_SPECIALTY1" ManuallyRouted="false" />
+        <AssociationConnector Association="MobileClinic_DBModel.FK_DOCTORS_SPECIALTY2" ManuallyRouted="false" />
+        <AssociationConnector Association="MobileClinic_DBModel.FK_DOCTORS_SPECIALTY3" ManuallyRouted="false" />
+        <AssociationConnector Association="MobileClinic_DBModel.FK_DOCTORS_APPOINTMENT_DETAILS_DOCTORS_AVAILABLE" ManuallyRouted="false" />
+        <AssociationConnector Association="MobileClinic_DBModel.FK_PATIENTS_APPOINTMENTS_DOCTORS_APPOINTMENT_DETAILS" ManuallyRouted="false" />
+        <AssociationConnector Association="MobileClinic_DBModel.FK_PATIENTS_APPOINTMENTS_PATIENTS1" ManuallyRouted="false" />
+        <AssociationConnector Association="MobileClinic_DBModel.FK_PATIENTS_APPOINTMENTS_PATIENTS_APPOINTMENTS" ManuallyRouted="false" />
+        <AssociationConnector Association="MobileClinic_DBModel.FK_SPECIALTY_SPECIALIZATIONS" ManuallyRouted="false" />
+        <AssociationConnector Association="MobileClinic_DBModel.FK_DOCTORS_CITY" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MobileClinic_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="DOCTORS">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nchar" MaxLength="20" />
+    <Property Name="LastName" Type="nchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="DOCTORS_APPOINTMENT_DETAILS">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DoctorId" Type="int" />
+    <Property Name="DoctorAvilableId" Type="int" />
+    <Property Name="Starting" Type="time" Precision="7" />
+    <Property Name="Ending" Type="time" Precision="7" />
+  </EntityType>
+  <EntityType Name="DOCTORS_AVAILABLE">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DoctorId" Type="int" />
+    <Property Name="Day" Type="nchar" MaxLength="10" />
+    <Property Name="StartingTime" Type="time" Precision="7" />
+    <Property Name="EndingTime" Type="time" Precision="7" />
+    <Property Name="AppointmentDuration" Type="time" Precision="7" />
+  </EntityType>
+  <EntityType Name="PATIENTS">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nchar" MaxLength="20" />
+    <Property Name="LastName" Type="nchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="PATIENTS_APPOINTMENTS">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PatientId" Type="int" />
+    <Property Name="DoctorId" Type="int" />
+    <Property Name="AppointmentId" Type="int" />
+    <Property Name="AppointmentDate" Type="datetime" />
+    <Property Name="Status" Type="bit" />
+  </EntityType>
+  <Association Name="FK_DOCTORS_APPOINTMENT_DETAILS_Doctors">
+    <End Role="DOCTORS" Type="Self.DOCTORS" Multiplicity="0..1" />
+    <End Role="DOCTORS_APPOINTMENT_DETAILS" Type="Self.DOCTORS_APPOINTMENT_DETAILS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DOCTORS">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DOCTORS_APPOINTMENT_DETAILS">
+        <PropertyRef Name="DoctorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DOCTORS_APPOINTMENT_DETAILS_DOCTORS_AVAILABLE">
+    <End Role="DOCTORS_AVAILABLE" Type="Self.DOCTORS_AVAILABLE" Multiplicity="0..1" />
+    <End Role="DOCTORS_APPOINTMENT_DETAILS" Type="Self.DOCTORS_APPOINTMENT_DETAILS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DOCTORS_AVAILABLE">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DOCTORS_APPOINTMENT_DETAILS">
+        <PropertyRef Name="DoctorAvilableId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DOCTORS_AVAILABLE_Doctors">
+    <End Role="DOCTORS" Type="Self.DOCTORS" Multiplicity="0..1" />
+    <End Role="DOCTORS_AVAILABLE" Type="Self.DOCTORS_AVAILABLE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DOCTORS">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DOCTORS_AVAILABLE">
+        <PropertyRef Name="DoctorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PATIENTS_APPOINTMENTS_Doctors">
+    <End Role="DOCTORS" Type="Self.DOCTORS" Multiplicity="0..1" />
+    <End Role="PATIENTS_APPOINTMENTS" Type="Self.PATIENTS_APPOINTMENTS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DOCTORS">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PATIENTS_APPOINTMENTS">
+        <PropertyRef Name="DoctorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PATIENTS_APPOINTMENTS_DOCTORS_APPOINTMENT_DETAILS">
+    <End Role="DOCTORS_APPOINTMENT_DETAILS" Type="Self.DOCTORS_APPOINTMENT_DETAILS" Multiplicity="0..1" />
+    <End Role="PATIENTS_APPOINTMENTS" Type="Self.PATIENTS_APPOINTMENTS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DOCTORS_APPOINTMENT_DETAILS">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PATIENTS_APPOINTMENTS">
+        <PropertyRef Name="AppointmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PATIENTS_APPOINTMENTS_Patients">
+    <End Role="PATIENTS" Type="Self.PATIENTS" Multiplicity="0..1" />
+    <End Role="PATIENTS_APPOINTMENTS" Type="Self.PATIENTS_APPOINTMENTS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PATIENTS">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PATIENTS_APPOINTMENTS">
+        <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MobileClinic_DBModelStoreContainer">
+    <EntitySet Name="DOCTORS" EntityType="Self.DOCTORS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DOCTORS_APPOINTMENT_DETAILS" EntityType="Self.DOCTORS_APPOINTMENT_DETAILS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DOCTORS_AVAILABLE" EntityType="Self.DOCTORS_AVAILABLE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PATIENTS" EntityType="Self.PATIENTS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PATIENTS_APPOINTMENTS" EntityType="Self.PATIENTS_APPOINTMENTS" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_DOCTORS_APPOINTMENT_DETAILS_Doctors" Association="Self.FK_DOCTORS_APPOINTMENT_DETAILS_Doctors">
+      <End Role="DOCTORS" EntitySet="DOCTORS" />
+      <End Role="DOCTORS_APPOINTMENT_DETAILS" EntitySet="DOCTORS_APPOINTMENT_DETAILS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DOCTORS_APPOINTMENT_DETAILS_DOCTORS_AVAILABLE" Association="Self.FK_DOCTORS_APPOINTMENT_DETAILS_DOCTORS_AVAILABLE">
+      <End Role="DOCTORS_AVAILABLE" EntitySet="DOCTORS_AVAILABLE" />
+      <End Role="DOCTORS_APPOINTMENT_DETAILS" EntitySet="DOCTORS_APPOINTMENT_DETAILS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DOCTORS_AVAILABLE_Doctors" Association="Self.FK_DOCTORS_AVAILABLE_Doctors">
+      <End Role="DOCTORS" EntitySet="DOCTORS" />
+      <End Role="DOCTORS_AVAILABLE" EntitySet="DOCTORS_AVAILABLE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PATIENTS_APPOINTMENTS_Doctors" Association="Self.FK_PATIENTS_APPOINTMENTS_Doctors">
+      <End Role="DOCTORS" EntitySet="DOCTORS" />
+      <End Role="PATIENTS_APPOINTMENTS" EntitySet="PATIENTS_APPOINTMENTS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PATIENTS_APPOINTMENTS_DOCTORS_APPOINTMENT_DETAILS" Association="Self.FK_PATIENTS_APPOINTMENTS_DOCTORS_APPOINTMENT_DETAILS">
+      <End Role="DOCTORS_APPOINTMENT_DETAILS" EntitySet="DOCTORS_APPOINTMENT_DETAILS" />
+      <End Role="PATIENTS_APPOINTMENTS" EntitySet="PATIENTS_APPOINTMENTS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PATIENTS_APPOINTMENTS_Patients" Association="Self.FK_PATIENTS_APPOINTMENTS_Patients">
+      <End Role="PATIENTS" EntitySet="PATIENTS" />
+      <End Role="PATIENTS_APPOINTMENTS" EntitySet="PATIENTS_APPOINTMENTS" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
